@@ -15,13 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH confiure
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_RAEL }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOST }}
-
       - name: Checkout
         uses: actions/checkout@v3
 
