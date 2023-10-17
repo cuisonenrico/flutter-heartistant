@@ -10,6 +10,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final focusNode = FocusNode();
+
     const verticalSpace12 = SizedBox(height: 10);
     return AppScaffold(
       body: Center(
@@ -27,7 +29,6 @@ class LoginScreen extends StatelessWidget {
             verticalSpace12,
             InputField(
               onChangeText: (text) {
-                print('ITO PO ' + text.toString());
                 // store in state
               },
               hintText: 'Username',
@@ -42,26 +43,12 @@ class LoginScreen extends StatelessWidget {
             ),
             const VerticalSpace(24.0),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
               label: 'Login',
               color: mediumGrey,
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     PrimaryButton(
-            //       onPressed: () {},
-            //       label: 'Login',
-            //       color: Colors.cyan,
-            //     ),
-            //     const HorizontalSpace(12),
-            //     PrimaryButton(
-            //       onPressed: () {},
-            //       label: 'Sign Up',
-            //       color: Colors.teal,
-            //     )
-            //   ],
-            // )
           ],
         ),
       ),

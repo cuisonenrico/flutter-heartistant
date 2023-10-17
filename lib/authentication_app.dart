@@ -11,7 +11,6 @@ class AuthenticationApp extends StatelessWidget {
       routeInformationProvider: router.routeInformationProvider,
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
-      useInheritedMediaQuery: true,
     );
   }
 }
