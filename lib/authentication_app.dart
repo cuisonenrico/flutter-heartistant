@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/login/login_screen.dart';
+import 'package:flutter_authentication/utilities/app_router.dart';
 
 class AuthenticationApp extends StatelessWidget {
   const AuthenticationApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: const LoginScreen(),
+    return MaterialApp.router(
+      title: 'Authentication App',
+      routeInformationProvider: router.routeInformationProvider,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
     );
   }
 }
