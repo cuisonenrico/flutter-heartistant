@@ -10,9 +10,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final focusNode = FocusNode();
-
     const verticalSpace12 = SizedBox(height: 10);
+
     return AppScaffold(
       body: Center(
         child: Column(
