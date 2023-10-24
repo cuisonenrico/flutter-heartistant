@@ -23,6 +23,11 @@ dependencies:
 
   go_router: ^11.1.4
 
+  firebase_auth: ^4.11.1
+
+  firebase_core: ^2.19.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

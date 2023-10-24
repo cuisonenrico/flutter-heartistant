@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_authentication/utilities/widget_constants.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
@@ -17,6 +18,7 @@ class InputField extends StatelessWidget {
     TextEditingController controller = TextEditingController();
 
     return Container(
+      margin: const EdgeInsets.only(bottom: defaultHalfPadding),
       width: 300,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(

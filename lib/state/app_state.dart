@@ -1,3 +1,5 @@
+import 'package:async_redux/async_redux.dart';
+import 'package:flutter_authentication/state/forms/login_form_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_state.freezed.dart';
@@ -5,7 +7,14 @@ part 'app_state.g.dart';
 
 @freezed
 class AppState with _$AppState {
-  factory AppState() = _AppState;
+  factory AppState({
+    // Sub-states
+    @Default(LoginFormState()) LoginFormState loginFormState,
+
+    // Events
+    @JsonKey(includeFromJson: false) Event<String>? errorStringEvt,
+    @JsonKey(includeFromJson: false) Event<bool>? loginSuccessEvt,
+  }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
 
