@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_authentication/authentication_app.dart';
 import 'package:flutter_authentication/firebase_options.dart';
+import 'package:flutter_authentication/state/actions/user_actions.dart';
 import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/utilities/login/authentication_handler_impl.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -26,7 +27,9 @@ Future<void> startApp() async {
 
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-      await AuthenticationHandlerImpl().signOut();
+      FirebaseAuth.instance
+          .authStateChanges()
+          .listen((User? user) => store.dispatch(SetUserLoggedInStatus(user != null)));
 
       runApp(
         StoreProvider<AppState>(
