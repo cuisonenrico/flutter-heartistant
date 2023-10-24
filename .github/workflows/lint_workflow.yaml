@@ -32,17 +32,50 @@ jobs:
           cache: true
           architecture: x64
 
-#   Uncomment when environment files are necessary
-#      - name: Inject Dummy Environment File
-#        uses: "DamianReeves/write-file-action@master"
-#        with:
-#          path: lib/environment.dart
-#          write-mode: overwrite
-#          contents: |
-#            // ignore_for_file: constant_identifier_names
-#            class Environment {
-#
-#            }
+      - name: Inject Dummy Environment File
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: lib/environment.dart
+          write-mode: overwrite
+          contents: |
+            // ignore_for_file: constant_identifier_names
+            import 'package:firebase_core/firebase_core.dart';
+  
+            const FirebaseOptions WEB_ENV = FirebaseOptions(
+              apiKey: '',
+              appId: '',
+              messagingSenderId: '',
+              projectId: '',
+              authDomain: '',
+              storageBucket: '',
+              measurementId: '',
+            );
+            
+            const FirebaseOptions ADR_ENV = FirebaseOptions(
+              apiKey: '',
+              appId: '',
+              messagingSenderId: '',
+              projectId: '',
+              storageBucket: '',
+            );
+            
+            const FirebaseOptions IOS_ENV = FirebaseOptions(
+              apiKey: '',
+              appId: '',
+              messagingSenderId: '',
+              projectId: '',
+              storageBucket: '',
+              iosBundleId: '',
+            );
+            
+            const FirebaseOptions MACOS_ENV = FirebaseOptions(
+              apiKey: 'AIzaSyDyjCioshkfP3EZn8Q5VjUZoFA-7t42wMQ',
+              appId: '1:715498583388:ios:379045813110ed2fcf3d99',
+              messagingSenderId: '715498583388',
+              projectId: 'flutter-project-d2944',
+              storageBucket: 'flutter-project-d2944.appspot.com',
+              iosBundleId: 'com.example.flutterAuthentication.RunnerTests',
+            );
 
       - name: Install packages and analyze
         run: |
