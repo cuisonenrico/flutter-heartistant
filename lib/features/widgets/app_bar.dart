@@ -13,6 +13,7 @@ class MyAppBar extends StatelessWidget {
     this.onPressBack,
     this.secondaryActionIcon = Icons.menu,
     this.isSecondaryIconVisible = true,
+    this.isBackButtonVisible = true,
     this.labelTextStyle,
     this.subLabel,
     this.isCornersRounded = true,
@@ -25,6 +26,7 @@ class MyAppBar extends StatelessWidget {
 
   final bool isCornersRounded;
   final bool isSecondaryIconVisible;
+  final bool isBackButtonVisible;
   final String label;
   final IconData secondaryActionIcon;
   final bool isShadowVisible;
@@ -53,14 +55,15 @@ class MyAppBar extends StatelessWidget {
         ),
         child: Row(
           children: [
-            AppIconButton(
-              icon: const Icon(
-                Icons.chevron_left_rounded,
-                size: _backButtonSize,
-                color: Colors.black,
+            if (isBackButtonVisible)
+              AppIconButton(
+                icon: const Icon(
+                  Icons.chevron_left_rounded,
+                  size: _backButtonSize,
+                  color: Colors.black,
+                ),
+                onPressed: onPressBack ?? context.pop,
               ),
-              onPressed: onPressBack ?? context.pop,
-            ),
             Expanded(
               child: AppBarLabel(
                 label: label,
