@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_authentication/state/actions/event_actions.dart';
 import 'package:flutter_authentication/state/app_state.dart';
 import 'package:flutter_authentication/utilities/login/authentication_handler_impl.dart';
@@ -52,14 +53,18 @@ class LoginUserAction extends ReduxAction<AppState> {
 
     if (identifier == null || password == null) return state;
 
-    final userCred = await AuthenticationHandlerImpl().signInWithEmailAndPassword(
-      email: identifier,
-      password: password,
-    );
+    var isSuccess = true;
 
-    final isValid = userCred.user != null;
+    try {
+      await AuthenticationHandlerImpl().signInWithEmailAndPassword(
+        email: identifier,
+        password: password,
+      );
+    } on FirebaseAuthException catch (_) {
+      isSuccess = false;
+    }
 
-    dispatch(SetLoginSuccessEvt(isValid));
+    dispatch(SetLoginSuccessEvt(isSuccess));
 
     // Clears credentials stored in state
     dispatch(DisposeCredentialsAction());
@@ -85,4 +90,15 @@ class DisposeErrorMessageAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() => state.copyWith.loginFormState(errorMessage: null);
+}
+
+/// Signs out user from firebase
+class SignOutUserAction extends ReduxAction<AppState> {
+  SignOutUserAction();
+
+  @override
+  AppState reduce() {
+    AuthenticationHandlerImpl().signOut();
+    return state;
+  }
 }
