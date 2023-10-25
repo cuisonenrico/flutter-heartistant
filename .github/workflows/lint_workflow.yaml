@@ -69,12 +69,12 @@ jobs:
             );
             
             const FirebaseOptions MACOS_ENV = FirebaseOptions(
-              apiKey: 'AIzaSyDyjCioshkfP3EZn8Q5VjUZoFA-7t42wMQ',
-              appId: '1:715498583388:ios:379045813110ed2fcf3d99',
-              messagingSenderId: '715498583388',
-              projectId: 'flutter-project-d2944',
-              storageBucket: 'flutter-project-d2944.appspot.com',
-              iosBundleId: 'com.example.flutterAuthentication.RunnerTests',
+              apiKey: '',
+              appId: '',
+              messagingSenderId: '',
+              projectId: '',
+              storageBucket: '',
+              iosBundleId: '',
             );
 
       - name: Install packages and analyze
