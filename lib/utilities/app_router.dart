@@ -10,13 +10,17 @@ final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(deb
 
 final router = GoRouter(
   observers: [routeObservers],
-  initialLocation: LoginScreenConnector.route,
+  initialLocation: '/',
   navigatorKey: rootNavigatorKey,
-  redirect: (context, __) async {
+  redirect: (context, routeState) async {
     final state = StoreProvider.state<AppState>(context);
     final isLoggedIn = state?.userState.isLoggedIn == true;
 
-    return isLoggedIn ? LandingPageConnector.route : LoginScreenConnector.route;
+    if (routeState.matchedLocation.contains('sign-up-page')) return null;
+
+    if (!isLoggedIn) return LoginScreenConnector.route;
+
+    return routeState.uri.toString() == '/' ? LandingPageConnector.route : routeState.uri.toString();
   },
   routes: [
     GoRoute(
