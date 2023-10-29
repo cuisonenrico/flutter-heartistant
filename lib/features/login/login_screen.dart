@@ -67,10 +67,7 @@ class LoginScreen extends StatelessWidget {
               verticalSpace16,
             ],
             PrimaryButton(
-              onPressed: () {
-                onLogin();
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
+              onPressed: onLogin,
               label: 'Login',
               color: mediumGrey,
             ),
