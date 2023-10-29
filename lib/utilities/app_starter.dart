@@ -18,10 +18,8 @@ Future<void> startApp() async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      AppState? state;
-
       final store = Store<AppState>(
-        initialState: state ?? AppState.init(),
+        initialState: AppState.init(),
         actionObservers: [if (kDebugMode) Log.printer(formatter: Log.multiLineFormatter)],
       );
 

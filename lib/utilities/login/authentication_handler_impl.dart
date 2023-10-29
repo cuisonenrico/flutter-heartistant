@@ -17,7 +17,11 @@ class AuthenticationHandlerImpl implements AuthenticationHandler {
   Future<void> signOut() async => await FirebaseAuth.instance.signOut();
 
   @override
-  Future<UserCredential> createUserWithEmailAndPassword({required String email, required String password}) async {
+  Future<UserCredential> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
     final userCred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,

@@ -18,6 +18,7 @@ class AppState with _$AppState {
     // Events
     @JsonKey(includeFromJson: false) Event<String>? errorStringEvt,
     @JsonKey(includeFromJson: false) Event<bool>? loginSuccessEvt,
+    @JsonKey(includeFromJson: false) Event<bool>? passwordMismatchEvt,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
