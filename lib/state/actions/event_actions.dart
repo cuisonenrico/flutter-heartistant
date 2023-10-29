@@ -8,3 +8,10 @@ class SetLoginSuccessEvt extends ReduxAction<AppState> {
   @override
   AppState reduce() => state.copyWith(loginSuccessEvt: Event(didSucceed));
 }
+
+class SetPasswordMismatchEvent extends ReduxAction<AppState> {
+  SetPasswordMismatchEvent();
+
+  @override
+  AppState reduce() => state.copyWith(passwordMismatchEvt: Event(true));
+}

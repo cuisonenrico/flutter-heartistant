@@ -8,7 +8,22 @@ import 'package:flutter_authentication/utilities/colors.dart';
 import 'package:flutter_authentication/utilities/widget_constants.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({
+    required this.onChangeEmail,
+    required this.onChangeUsername,
+    required this.onChangePassword,
+    required this.onChangeConfirmPassword,
+    required this.onDisposeSignupForm,
+    required this.onSignUpWithEmailAndPassword,
+    super.key,
+  });
+
+  final ValueChanged<String?> onChangeEmail;
+  final ValueChanged<String?> onChangeUsername;
+  final ValueChanged<String?> onChangePassword;
+  final ValueChanged<String?> onChangeConfirmPassword;
+  final VoidCallback onDisposeSignupForm;
+  final VoidCallback onSignUpWithEmailAndPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -31,23 +46,25 @@ class SignUpScreen extends StatelessWidget {
             ),
             const VerticalSpace(defaultHalfSpacing),
             InputField(
-              onChangeText: (_) {},
+              onChangeText: (email) => onChangeEmail(email),
               hintText: 'Email',
             ),
+            // InputField(
+            //   onChangeText: (username) => onChangeUsername(username),
+            //   hintText: 'Username',
+            // ),
             InputField(
-              onChangeText: (_) {},
-              hintText: 'Username',
-            ),
-            InputField(
-              onChangeText: (_) {},
+              obscureText: true,
+              onChangeText: (password) => onChangePassword(password),
               hintText: 'Password',
             ),
             InputField(
-              onChangeText: (_) {},
+              obscureText: true,
+              onChangeText: (confirmPassword) => onChangeConfirmPassword(confirmPassword),
               hintText: 'Confirm Password ',
             ),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: onSignUpWithEmailAndPassword,
               label: 'Register',
               color: mediumGrey,
             ),
