@@ -39,10 +39,12 @@ class SignUpScreen extends StatelessWidget {
               hintText: 'Username',
             ),
             InputField(
+              obscureText: true,
               onChangeText: (_) {},
               hintText: 'Password',
             ),
             InputField(
+              obscureText: true,
               onChangeText: (_) {},
               hintText: 'Confirm Password ',
             ),

@@ -16,7 +16,7 @@ final router = GoRouter(
     final state = StoreProvider.state<AppState>(context);
     final isLoggedIn = state?.userState.isLoggedIn == true;
 
-    if (routeState.matchedLocation.contains('sign-up-page')) return null;
+    if (routeState.uri.toString().contains('sign-up-page')) return null;
 
     if (!isLoggedIn) return LoginScreenConnector.route;
 

@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter_authentication/state/forms/login_form_state.dart';
+import 'package:flutter_authentication/state/forms/sign_up_form_state.dart';
 import 'package:flutter_authentication/state/user_state/user_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,6 +12,7 @@ class AppState with _$AppState {
   factory AppState({
     // Sub-states
     @Default(LoginFormState()) LoginFormState loginFormState,
+    @Default(SignUpFormState()) SignUpFormState signUpFormState,
     @Default(UserState()) UserState userState,
 
     // Events
