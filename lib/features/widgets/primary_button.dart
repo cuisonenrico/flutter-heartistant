@@ -40,7 +40,10 @@ class PrimaryButton extends StatelessWidget {
         borderRadius: borderRadius ?? BorderRadius.circular(defaultQuarterRadius),
       ),
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: () {
+          onPressed();
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,

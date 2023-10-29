@@ -8,7 +8,11 @@ abstract class AuthenticationHandler {
   Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    required String confirmPassword,
   });
 
-  Future<UserCredential> signInWithEmailAndPassword({required String email, required String password});
+  Future<UserCredential> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  });
 }
