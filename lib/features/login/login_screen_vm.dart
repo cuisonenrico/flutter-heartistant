@@ -20,7 +20,9 @@ class LoginScreenVmFactory extends VmFactory<AppState, LoginScreenConnector, Log
       );
 
   Future<void> _onLogin() async => await dispatch(LoginUserAction());
+
   Future<void> _onLoginWithGoogle() async => await dispatch(LoginWithGoogleAction());
+
   Future<void> _onLoginWithFacebook() async => await dispatch(LoginWithFacebookAction());
 
   void _onChangeId(String identifier) => dispatch(SetIdentifierAction(identifier));

@@ -21,8 +21,6 @@ class LoginScreenConnector extends StatelessWidget {
       } else {
         vm.onDisposeCredentials();
       }
-
-      // vm.onSetLoginErrorMessage('Invalid Credentials');
     }
   }
 

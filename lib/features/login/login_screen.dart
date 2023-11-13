@@ -7,9 +7,14 @@ import 'package:flutter_authentication/features/widgets/input_field.dart';
 import 'package:flutter_authentication/features/widgets/primary_button.dart';
 import 'package:flutter_authentication/gen/assets.gen.dart';
 import 'package:flutter_authentication/utilities/colors.dart';
+import 'package:flutter_authentication/utilities/string_constants.dart';
 import 'package:flutter_authentication/utilities/widget_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
+const double _logoSize = 150.0;
+const double _signInButtonWidth = 220.0;
+const double _signInIconSize = 25.0;
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({
@@ -44,47 +49,50 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Assets.pngImages.heartistantLogo.image(height: 150, width: 150),
+            Assets.pngImages.heartistantLogo.image(
+              height: _logoSize,
+              width: _logoSize,
+            ),
             verticalSpace16,
             InputField(
               onChangeText: (identifier) => onChangeId(identifier),
-              hintText: 'Username/Email',
+              hintText: emailUsernameHint,
               icon: Icons.mail,
             ),
             InputField(
               onChangeText: (password) => onChangePassword(password),
               obscureText: true,
-              hintText: 'Password',
+              hintText: passwordHint,
               icon: Icons.lock,
             ),
             PrimaryButton(
               onPressed: onLogin,
-              label: 'Sign in!',
+              label: signInLabel,
               color: Colors.blueAccent,
-              width: 220,
+              width: _signInButtonWidth,
             ),
             verticalSpace8,
             PrimaryButton(
               onPressed: onLoginWithFacebook,
-              label: 'Sign in with Facebook',
+              label: signInWithFacebookLabel,
               color: fbColor,
-              width: 220,
+              width: _signInButtonWidth,
               leading: SvgPicture.asset(
                 Assets.svgImages.facebook,
-                width: 25,
+                width: _signInIconSize,
               ),
             ),
             verticalSpace8,
             PrimaryButton(
               onPressed: onLoginWithGoogle,
-              label: 'Sign in with Google',
+              label: signInWithGoogleLabel,
               labelColor: Colors.black,
               color: Colors.white,
-              width: 220,
+              width: _signInButtonWidth,
               border: Border.all(color: Colors.black),
               leading: SvgPicture.asset(
                 Assets.svgImages.google,
-                width: 25,
+                width: _signInIconSize,
               ),
             ),
             verticalSpace8,
@@ -93,13 +101,13 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don't have an account? ",
+                  noAccountPrompt,
                   style: TextStyles.label1,
                 ),
                 InkWell(
                   onTap: () => context.pushNamed(SignUpConnector.routeName),
                   child: Text(
-                    'Sign up!',
+                    signUpLabel,
                     style: TextStyles.label1.copyWith(
                       color: Colors.blueAccent,
                       decoration: TextDecoration.underline,
