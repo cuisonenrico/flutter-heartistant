@@ -25,9 +25,11 @@ Future<void> startApp() async {
 
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-      FirebaseAuth.instance
-          .authStateChanges()
-          .listen((User? user) => store.dispatch(SetUserLoggedInStatus(user != null)));
+      FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+        if (user != null) {
+          await store.dispatch(UserLoginAction(user));
+        }
+      });
 
       runApp(
         StoreProvider<AppState>(

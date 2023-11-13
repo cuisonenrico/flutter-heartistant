@@ -23,12 +23,17 @@ final router = GoRouter(
     return routeState.uri.toString() == '/' ? LandingPageConnector.route : routeState.uri.toString();
   },
   routes: [
+    /// Landing Page
+    ///   -
     GoRoute(
       path: LandingPageConnector.route,
       name: LandingPageConnector.routeName,
       builder: (_, __) => const LandingPageConnector(),
       routes: const [],
     ),
+
+    /// Login Screen
+    ///   - Sign Up
     GoRoute(
         path: LoginScreenConnector.route,
         name: LoginScreenConnector.routeName,
