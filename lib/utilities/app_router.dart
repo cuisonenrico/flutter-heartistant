@@ -1,3 +1,5 @@
+// ignore_for_file: strict_raw_type
+
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_authentication/features/landing/landing_page_connector.dart';
@@ -10,7 +12,7 @@ final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(deb
 
 final router = GoRouter(
   observers: [routeObservers],
-  initialLocation: '/',
+  initialLocation: LandingPageConnector.route,
   navigatorKey: rootNavigatorKey,
   redirect: (context, routeState) async {
     final state = StoreProvider.state<AppState>(context);
@@ -20,7 +22,9 @@ final router = GoRouter(
 
     if (!isLoggedIn) return LoginScreenConnector.route;
 
-    return routeState.uri.toString() == '/' ? LandingPageConnector.route : routeState.uri.toString();
+    if (routeState.uri.toString() == LandingPageConnector.route) return null;
+
+    return routeState.uri.toString();
   },
   routes: [
     /// Landing Page
@@ -29,6 +33,11 @@ final router = GoRouter(
       path: LandingPageConnector.route,
       name: LandingPageConnector.routeName,
       builder: (_, __) => const LandingPageConnector(),
+      pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+        context: context,
+        state: state,
+        child: const LandingPageConnector(),
+      ),
       routes: const [],
     ),
 
@@ -43,6 +52,11 @@ final router = GoRouter(
             path: SignUpConnector.route,
             name: SignUpConnector.routeName,
             builder: (_, __) => const SignUpConnector(),
+            pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const SignUpConnector(),
+            ),
           ),
         ]),
   ],
@@ -50,3 +64,21 @@ final router = GoRouter(
 
 // Register the RouteObserver as a navigation observer.
 final RouteObserver<ModalRoute<void>> routeObservers = RouteObserver<ModalRoute<void>>();
+
+CustomTransitionPage buildPageWithDefaultTransition<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) =>
+    CustomTransitionPage<T>(
+      key: state.pageKey,
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
+          position: animation.drive(
+            Tween<Offset>(
+              begin: const Offset(1, 1),
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.easeIn)),
+          ),
+          child: child),
+    );

@@ -25,8 +25,12 @@ Future<void> startApp() async {
 
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+      final currUser = FirebaseAuth.instance.currentUser;
+
+      if (currUser != null) await store.dispatch(UserLoginAction(currUser));
+
       FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-        if (user != null) {
+        if (user != null && user.uid != currUser?.uid) {
           await store.dispatch(UserLoginAction(user));
         }
       });

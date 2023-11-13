@@ -18,6 +18,8 @@ class LoginScreenConnector extends StatelessWidget {
 
       if (loginSuccess == true) {
         router.pushNamed(LandingPageConnector.routeName);
+      } else {
+        vm.onDisposeCredentials();
       }
 
       // vm.onSetLoginErrorMessage('Invalid Credentials');
@@ -32,9 +34,10 @@ class LoginScreenConnector extends StatelessWidget {
       builder: (_, vm) => LoginScreen(
         onChangeId: vm.onChangeId,
         onChangePassword: vm.onChangePassword,
-        onDisposeCredentials: vm.onDisposeCredentials,
         onLogin: vm.onLogin,
         loginErrorMessage: vm.loginErrorMessage,
+        onLoginWithGoogle: vm.onLoginWithGoogle,
+        onLoginWithFacebook: vm.onLoginWithFacebook,
       ),
     );
   }
