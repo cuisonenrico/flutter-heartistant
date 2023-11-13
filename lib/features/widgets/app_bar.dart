@@ -76,11 +76,11 @@ class MyAppBar extends StatelessWidget {
             //     onPressed: () => context.pushNamed(ProfilePageConnector.routeName),
             //     icon: const Icon(Icons.person),
             //   ),
-            // if (isSecondaryIconVisible)
-            //   AppIconButton(
-            //     onPressed: onSecondaryActionPressed,
-            //     icon: Icon(secondaryActionIcon),
-            //   ),
+            if (isSecondaryIconVisible)
+              AppIconButton(
+                onPressed: onSecondaryActionPressed,
+                icon: Icon(secondaryActionIcon),
+              ),
           ],
         ),
       ),
