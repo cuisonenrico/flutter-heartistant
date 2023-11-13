@@ -27,7 +27,7 @@ Future<void> startApp() async {
 
       FirebaseAuth.instance.authStateChanges().listen((User? user) async {
         if (user != null) {
-          store.dispatch(UserLoginAction(user));
+          await store.dispatch(UserLoginAction(user));
         }
       });
 

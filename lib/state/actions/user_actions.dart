@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_authentication/state/actions/event_actions.dart';
 import 'package:flutter_authentication/state/app_state.dart';
 import 'package:flutter_authentication/utilities/handlers/users_handler.dart';
 
@@ -27,7 +28,9 @@ class UserLoginAction extends ReduxAction<AppState> {
 
   @override
   void after() {
-    SetUserLoggedInStatus(true);
+    // TODO: optimize this
+    dispatch(SetUserLoggedInStatus(true));
+    dispatch(SetLoginSuccessEvt(true));
     super.after();
   }
 }
