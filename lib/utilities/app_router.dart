@@ -47,6 +47,11 @@ final router = GoRouter(
         path: LoginScreenConnector.route,
         name: LoginScreenConnector.routeName,
         builder: (_, __) => const LoginScreenConnector(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const LoginScreenConnector(),
+            ),
         routes: [
           GoRoute(
             path: SignUpConnector.route,

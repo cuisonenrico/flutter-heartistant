@@ -45,78 +45,82 @@ class LoginScreen extends StatelessWidget {
     const verticalSpace8 = VerticalSpace(defaultQuarterSpacing);
 
     return AppScaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Assets.pngImages.heartistantLogo.image(
-              height: _logoSize,
-              width: _logoSize,
-            ),
-            verticalSpace16,
-            InputField(
-              onChangeText: (identifier) => onChangeId(identifier),
-              hintText: emailUsernameHint,
-              icon: Icons.mail,
-            ),
-            InputField(
-              onChangeText: (password) => onChangePassword(password),
-              obscureText: true,
-              hintText: passwordHint,
-              icon: Icons.lock,
-            ),
-            PrimaryButton(
-              onPressed: onLogin,
-              label: signInLabel,
-              color: Colors.blueAccent,
-              width: _signInButtonWidth,
-            ),
-            verticalSpace8,
-            PrimaryButton(
-              onPressed: onLoginWithFacebook,
-              label: signInWithFacebookLabel,
-              color: fbColor,
-              width: _signInButtonWidth,
-              leading: SvgPicture.asset(
-                Assets.svgImages.facebook,
-                width: _signInIconSize,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 100),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Assets.pngImages.heartistantLogo.image(
+                height: _logoSize,
+                width: _logoSize,
               ),
-            ),
-            verticalSpace8,
-            PrimaryButton(
-              onPressed: onLoginWithGoogle,
-              label: signInWithGoogleLabel,
-              labelColor: Colors.black,
-              color: Colors.white,
-              width: _signInButtonWidth,
-              border: Border.all(color: Colors.black),
-              leading: SvgPicture.asset(
-                Assets.svgImages.google,
-                width: _signInIconSize,
+              verticalSpace16,
+              InputField(
+                onChangeText: (identifier) => onChangeId(identifier),
+                hintText: emailUsernameHint,
+                icon: Icons.mail,
               ),
-            ),
-            verticalSpace8,
-            const VerticalSpace(defaultHalfSpacing),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  noAccountPrompt,
-                  style: TextStyles.label1,
+              InputField(
+                onChangeText: (password) => onChangePassword(password),
+                obscureText: true,
+                hintText: passwordHint,
+                icon: Icons.lock,
+              ),
+              PrimaryButton(
+                onPressed: onLogin,
+                label: signInLabel,
+                color: Colors.blueAccent,
+                width: _signInButtonWidth,
+              ),
+              verticalSpace8,
+              PrimaryButton(
+                onPressed: onLoginWithFacebook,
+                label: signInWithFacebookLabel,
+                color: fbColor,
+                width: _signInButtonWidth,
+                leading: SvgPicture.asset(
+                  Assets.svgImages.facebook,
+                  width: _signInIconSize - 10.0,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
-                InkWell(
-                  onTap: () => context.pushNamed(SignUpConnector.routeName),
-                  child: Text(
-                    signUpLabel,
-                    style: TextStyles.label1.copyWith(
-                      color: Colors.blueAccent,
-                      decoration: TextDecoration.underline,
+              ),
+              verticalSpace8,
+              PrimaryButton(
+                onPressed: onLoginWithGoogle,
+                label: signInWithGoogleLabel,
+                labelColor: Colors.black,
+                color: Colors.white,
+                width: _signInButtonWidth,
+                border: Border.all(color: Colors.black),
+                leading: SvgPicture.asset(
+                  Assets.svgImages.google,
+                  width: _signInIconSize,
+                ),
+              ),
+              verticalSpace8,
+              const VerticalSpace(defaultHalfSpacing),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    noAccountPrompt,
+                    style: TextStyles.body1,
+                  ),
+                  InkWell(
+                    onTap: () => context.pushNamed(SignUpConnector.routeName),
+                    child: Text(
+                      signUpLabel,
+                      style: TextStyles.label1.copyWith(
+                        color: Colors.blueAccent,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
