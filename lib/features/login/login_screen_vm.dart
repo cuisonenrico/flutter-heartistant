@@ -12,12 +12,18 @@ class LoginScreenVmFactory extends VmFactory<AppState, LoginScreenConnector, Log
         onChangePassword: _onChangePassword,
         onSetLoginErrorMessage: _onSetLoginErrorMessage,
         onLogin: _onLogin,
+        onLoginWithGoogle: _onLoginWithGoogle,
+        onLoginWithFacebook: _onLoginWithFacebook,
         onDisposeCredentials: _onDisposeCredentials,
         loginErrorMessage: _loginErrorMessage,
         loginSuccessEvt: _loginSuccessEvt,
       );
 
-  void _onLogin() => dispatch(LoginUserAction());
+  Future<void> _onLogin() async => await dispatch(LoginUserAction());
+
+  Future<void> _onLoginWithGoogle() async => await dispatch(LoginWithGoogleAction());
+
+  Future<void> _onLoginWithFacebook() async => await dispatch(LoginWithFacebookAction());
 
   void _onChangeId(String identifier) => dispatch(SetIdentifierAction(identifier));
 
@@ -40,6 +46,8 @@ class LoginScreenVm extends Vm {
     required this.onChangePassword,
     required this.onSetLoginErrorMessage,
     required this.onLogin,
+    required this.onLoginWithGoogle,
+    required this.onLoginWithFacebook,
     required this.onDisposeCredentials,
     this.loginErrorMessage,
     this.loginSuccessEvt,
@@ -54,6 +62,8 @@ class LoginScreenVm extends Vm {
   final ValueChanged<String> onChangePassword;
   final ValueChanged<String> onSetLoginErrorMessage;
   final VoidCallback onLogin;
+  final VoidCallback onLoginWithGoogle;
+  final VoidCallback onLoginWithFacebook;
   final VoidCallback onDisposeCredentials;
 
   // Events

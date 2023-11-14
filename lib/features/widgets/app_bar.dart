@@ -71,11 +71,6 @@ class MyAppBar extends StatelessWidget {
                 labelTextStyle: labelTextStyle,
               ),
             ),
-            // if (!isProfilePage && !isLoginPage)
-            //   AppIconButton(
-            //     onPressed: () => context.pushNamed(ProfilePageConnector.routeName),
-            //     icon: const Icon(Icons.person),
-            //   ),
             if (isSecondaryIconVisible)
               AppIconButton(
                 onPressed: onSecondaryActionPressed,
