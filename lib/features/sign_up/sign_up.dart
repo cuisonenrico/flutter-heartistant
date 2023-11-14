@@ -49,10 +49,6 @@ class SignUpScreen extends StatelessWidget {
               onChangeText: (email) => onChangeEmail(email),
               hintText: 'Email',
             ),
-            // InputField(
-            //   onChangeText: (username) => onChangeUsername(username),
-            //   hintText: 'Username',
-            // ),
             InputField(
               obscureText: true,
               onChangeText: (password) => onChangePassword(password),

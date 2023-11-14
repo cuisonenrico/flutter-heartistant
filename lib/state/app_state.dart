@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter_authentication/state/forms/login_form_state.dart';
 import 'package:flutter_authentication/state/forms/sign_up_form_state.dart';
+import 'package:flutter_authentication/state/main_page_state/main_page_state.dart';
 import 'package:flutter_authentication/state/user_state/user_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,6 +15,7 @@ class AppState with _$AppState {
     @Default(LoginFormState()) LoginFormState loginFormState,
     @Default(SignUpFormState()) SignUpFormState signUpFormState,
     @Default(UserState()) UserState userState,
+    @Default(MainPageState()) MainPageState mainPageState,
 
     // Events
     @JsonKey(includeFromJson: false) Event<String>? errorStringEvt,
