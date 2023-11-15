@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.flutter_authentication"
+        applicationId "com.example.flutter_heartistant"
         minSdkVersion 29
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
