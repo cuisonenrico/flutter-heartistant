@@ -60,13 +60,17 @@ class LoginScreen extends StatelessWidget {
                 onChangeText: (identifier) => onChangeId(identifier),
                 hintText: emailUsernameHint,
                 icon: Icons.mail,
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               ),
+              verticalSpace8,
               InputField(
                 onChangeText: (password) => onChangePassword(password),
                 obscureText: true,
                 hintText: passwordHint,
                 icon: Icons.lock,
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               ),
+              verticalSpace8,
               PrimaryButton(
                 onPressed: onLogin,
                 label: signInLabel,
