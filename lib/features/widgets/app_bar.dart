@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/widgets/app_bar_label.dart';
-import 'package:flutter_authentication/features/widgets/app_icon_button.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/widgets/app_bar_label.dart';
+import 'package:flutter_heartistant/features/widgets/app_icon_button.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:go_router/go_router.dart';
 
 const double _backButtonSize = 25.0;

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_authentication/features/login/login_screen_connector.dart';
-import 'package:flutter_authentication/features/widgets/primary_button.dart';
-import 'package:flutter_authentication/utilities/colors.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
+import 'package:flutter_heartistant/features/widgets/primary_button.dart';
+import 'package:flutter_heartistant/utilities/colors.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:go_router/go_router.dart';
 
 class Profile extends StatelessWidget {

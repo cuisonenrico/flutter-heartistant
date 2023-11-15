@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/styles/spacers.dart';
-import 'package:flutter_authentication/features/styles/styles.dart';
-import 'package:flutter_authentication/features/widgets/app_bar.dart';
-import 'package:flutter_authentication/features/widgets/app_scaffold.dart';
-import 'package:flutter_authentication/features/widgets/input_field.dart';
-import 'package:flutter_authentication/features/widgets/primary_button.dart';
-import 'package:flutter_authentication/gen/assets.gen.dart';
-import 'package:flutter_authentication/utilities/colors.dart';
-import 'package:flutter_authentication/utilities/string_constants.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
+import 'package:flutter_heartistant/features/widgets/app_bar.dart';
+import 'package:flutter_heartistant/features/widgets/app_scaffold.dart';
+import 'package:flutter_heartistant/features/widgets/input_field.dart';
+import 'package:flutter_heartistant/features/widgets/primary_button.dart';
+import 'package:flutter_heartistant/gen/assets.gen.dart';
+import 'package:flutter_heartistant/utilities/colors.dart';
+import 'package:flutter_heartistant/utilities/string_constants.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 const double _signUpButtonWidth = 220.0;

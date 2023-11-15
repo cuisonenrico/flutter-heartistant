@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_authentication/state/actions/event_actions.dart';
-import 'package:flutter_authentication/state/actions/user_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/utilities/handlers/users_handler.dart';
-import 'package:flutter_authentication/utilities/login/authentication_handler_impl.dart';
+import 'package:flutter_heartistant/state/actions/event_actions.dart';
+import 'package:flutter_heartistant/state/actions/user_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/handlers/users_handler.dart';
+import 'package:flutter_heartistant/utilities/login/authentication_handler_impl.dart';
 
 /// Sets the [identifier] in loginFormState
 class SetIdentifierAction extends ReduxAction<AppState> {

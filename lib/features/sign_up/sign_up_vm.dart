@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/sign_up/sign_up_connector.dart';
-import 'package:flutter_authentication/state/actions/sign_up_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
+import 'package:flutter_heartistant/state/actions/sign_up_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 
 class SignUpVmFactory extends VmFactory<AppState, SignUpConnector, SignUpVm> {
   @override

@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_authentication/features/landing/landing_page.dart';
-import 'package:flutter_authentication/features/landing/landing_page_vm.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/features/landing/landing_page.dart';
+import 'package:flutter_heartistant/features/landing/landing_page_vm.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 
 class LandingPageConnector extends StatelessWidget {
   const LandingPageConnector({super.key});

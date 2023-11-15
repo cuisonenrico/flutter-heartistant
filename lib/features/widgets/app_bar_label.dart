@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/styles/spacers.dart';
-import 'package:flutter_authentication/features/styles/styles.dart';
+import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
 
 class AppBarLabel extends StatelessWidget {
   const AppBarLabel({

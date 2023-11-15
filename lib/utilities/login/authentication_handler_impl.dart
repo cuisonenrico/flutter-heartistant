@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_authentication/utilities/login/base/authentication_handler.dart';
+import 'package:flutter_heartistant/utilities/login/base/authentication_handler.dart';
 
 class AuthenticationHandlerImpl implements AuthenticationHandler {
   AuthenticationHandlerImpl();

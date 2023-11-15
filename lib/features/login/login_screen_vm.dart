@@ -1,9 +1,9 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/login/login_screen_connector.dart';
-import 'package:flutter_authentication/state/actions/login_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/state/forms/login_form_state.dart';
+import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
+import 'package:flutter_heartistant/state/actions/login_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/state/forms/login_form_state.dart';
 
 class LoginScreenVmFactory extends VmFactory<AppState, LoginScreenConnector, LoginScreenVm> {
   @override
