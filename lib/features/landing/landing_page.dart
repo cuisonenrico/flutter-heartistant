@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/one/one.dart';
-import 'package:flutter_authentication/features/profile/profile.dart';
-import 'package:flutter_authentication/features/three/three.dart';
-import 'package:flutter_authentication/features/two/two.dart';
-import 'package:flutter_authentication/features/widgets/app_bar.dart';
-import 'package:flutter_authentication/features/widgets/app_scaffold.dart';
-import 'package:flutter_authentication/features/widgets/bottom_nav.dart';
-import 'package:flutter_authentication/utilities/enums/page_view_enum.dart';
+import 'package:flutter_heartistant/features/one/one.dart';
+import 'package:flutter_heartistant/features/profile/profile.dart';
+import 'package:flutter_heartistant/features/three/three.dart';
+import 'package:flutter_heartistant/features/two/two.dart';
+import 'package:flutter_heartistant/features/widgets/app_bar.dart';
+import 'package:flutter_heartistant/features/widgets/app_scaffold.dart';
+import 'package:flutter_heartistant/features/widgets/bottom_nav.dart';
+import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({

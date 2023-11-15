@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/sign_up/sign_up_connector.dart';
-import 'package:flutter_authentication/features/styles/spacers.dart';
-import 'package:flutter_authentication/features/styles/styles.dart';
-import 'package:flutter_authentication/features/widgets/app_scaffold.dart';
-import 'package:flutter_authentication/features/widgets/input_field.dart';
-import 'package:flutter_authentication/features/widgets/primary_button.dart';
-import 'package:flutter_authentication/gen/assets.gen.dart';
-import 'package:flutter_authentication/utilities/colors.dart';
-import 'package:flutter_authentication/utilities/string_constants.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
+import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
+import 'package:flutter_heartistant/features/widgets/app_scaffold.dart';
+import 'package:flutter_heartistant/features/widgets/input_field.dart';
+import 'package:flutter_heartistant/features/widgets/primary_button.dart';
+import 'package:flutter_heartistant/gen/assets.gen.dart';
+import 'package:flutter_heartistant/utilities/colors.dart';
+import 'package:flutter_heartistant/utilities/string_constants.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -60,13 +60,17 @@ class LoginScreen extends StatelessWidget {
                 onChangeText: (identifier) => onChangeId(identifier),
                 hintText: emailUsernameHint,
                 icon: Icons.mail,
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               ),
+              verticalSpace8,
               InputField(
                 onChangeText: (password) => onChangePassword(password),
                 obscureText: true,
                 hintText: passwordHint,
                 icon: Icons.lock,
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               ),
+              verticalSpace8,
               PrimaryButton(
                 onPressed: onLogin,
                 label: signInLabel,

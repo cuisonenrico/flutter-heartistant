@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/utilities/app_router.dart';
+import 'package:flutter_heartistant/utilities/app_router.dart';
 
 class AuthenticationApp extends StatelessWidget {
   const AuthenticationApp({super.key});

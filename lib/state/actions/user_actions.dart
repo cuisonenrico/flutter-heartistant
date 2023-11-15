@@ -1,7 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/utilities/handlers/users_handler.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/handlers/users_handler.dart';
 
 /// Sets [isLoggedIn] status in state
 class SetUserLoggedInStatus extends ReduxAction<AppState> {
