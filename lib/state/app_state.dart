@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
-import 'package:flutter_authentication/state/forms/login_form_state.dart';
-import 'package:flutter_authentication/state/forms/sign_up_form_state.dart';
-import 'package:flutter_authentication/state/main_page_state/main_page_state.dart';
-import 'package:flutter_authentication/state/user_state/user_state.dart';
+import 'package:flutter_heartistant/state/forms/login_form_state.dart';
+import 'package:flutter_heartistant/state/forms/sign_up_form_state.dart';
+import 'package:flutter_heartistant/state/main_page_state/main_page_state.dart';
+import 'package:flutter_heartistant/state/user_state/user_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_state.freezed.dart';

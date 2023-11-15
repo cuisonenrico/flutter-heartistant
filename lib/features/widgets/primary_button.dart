@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/styles/spacers.dart';
-import 'package:flutter_authentication/features/styles/styles.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({

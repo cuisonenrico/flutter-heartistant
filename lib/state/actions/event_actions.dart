@@ -1,6 +1,6 @@
 import 'package:async_redux/async_redux.dart';
-import 'package:flutter_authentication/state/actions/user_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/state/actions/user_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 
 class SetLoginSuccessEvt extends ReduxAction<AppState> {
   SetLoginSuccessEvt(this.didSucceed);

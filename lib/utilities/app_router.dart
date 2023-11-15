@@ -2,10 +2,10 @@
 
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/landing/landing_page_connector.dart';
-import 'package:flutter_authentication/features/login/login_screen_connector.dart';
-import 'package:flutter_authentication/features/sign_up/sign_up_connector.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/features/landing/landing_page_connector.dart';
+import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
+import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigatorKey');

@@ -1,4 +1,4 @@
-import 'package:flutter_authentication/state/user_state/user_dto/user_dto.dart';
+import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_state.freezed.dart';

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_authentication/state/user_state/user_dto/user_dto.dart';
-import 'package:flutter_authentication/utilities/handlers/base/firestore_users.dart';
-import 'package:flutter_authentication/utilities/handlers/db_constants.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
+import 'package:flutter_heartistant/utilities/handlers/base/firestore_users.dart';
+import 'package:flutter_heartistant/utilities/handlers/db_constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UsersHandler implements FirestoreUsers {

@@ -1,10 +1,10 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/landing/landing_page_connector.dart';
-import 'package:flutter_authentication/state/actions/login_actions.dart';
-import 'package:flutter_authentication/state/actions/main_page_action.dart';
-import 'package:flutter_authentication/state/actions/user_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/features/landing/landing_page_connector.dart';
+import 'package:flutter_heartistant/state/actions/login_actions.dart';
+import 'package:flutter_heartistant/state/actions/main_page_action.dart';
+import 'package:flutter_heartistant/state/actions/user_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 
 class LandingPageVmFactory extends VmFactory<AppState, LandingPageConnector, LandingPageVm> {
   @override

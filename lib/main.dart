@@ -1,3 +1,3 @@
-import 'package:flutter_authentication/utilities/app_starter.dart';
+import 'package:flutter_heartistant/utilities/app_starter.dart';
 
 void main() => startApp();
