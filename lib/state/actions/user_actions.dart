@@ -22,6 +22,8 @@ class UserLoginAction extends ReduxAction<AppState> {
   Future<AppState> reduce() async {
     final userDto = await UsersHandler().userLogin(user);
 
+    if (userDto == null) return state;
+
     return state.copyWith.userState(user: userDto);
   }
 

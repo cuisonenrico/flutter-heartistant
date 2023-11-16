@@ -8,6 +8,7 @@ part 'user_dto.g.dart';
 class UserDto with _$UserDto {
   const factory UserDto({
     String? email,
+    String? displayName,
     String? uid, // primary key
   }) = _UserDto;
 
@@ -15,8 +16,13 @@ class UserDto with _$UserDto {
 
   factory UserDto.fromFirestoreUser(User user) => UserDto(
         email: user.email,
+        displayName: user.uid,
         uid: user.uid,
       );
 
-  factory UserDto.init() => const UserDto();
+  factory UserDto.init() => const UserDto(
+        email: null,
+        displayName: null,
+        uid: null,
+      );
 }
