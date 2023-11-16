@@ -17,20 +17,27 @@ const double _signUpIconSize = 25.0;
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({
     required this.onChangeEmail,
-    required this.onChangeUsername,
+    required this.onChangeFirstName,
+    required this.onChangeLastName,
     required this.onChangePassword,
     required this.onChangeConfirmPassword,
+    required this.onChangeAgreeToTerms,
     required this.onDisposeSignupForm,
     required this.onSignUpWithEmailAndPassword,
+    required this.agreeToTerms,
     super.key,
   });
 
+  final ValueChanged<String?> onChangeFirstName;
+  final ValueChanged<String?> onChangeLastName;
   final ValueChanged<String?> onChangeEmail;
-  final ValueChanged<String?> onChangeUsername;
   final ValueChanged<String?> onChangePassword;
   final ValueChanged<String?> onChangeConfirmPassword;
+  final ValueChanged<bool> onChangeAgreeToTerms;
   final VoidCallback onDisposeSignupForm;
   final VoidCallback onSignUpWithEmailAndPassword;
+
+  final bool agreeToTerms;
 
   @override
   Widget build(BuildContext context) {
@@ -63,52 +70,54 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Flexible(
                     child: InputField(
-                      onChangeText: (_) {},
-                      hintText: 'First Name',
+                      onChangeText: onChangeFirstName,
+                      hintText: firstNameLabel,
                     ),
                   ),
                   const HorizontalSpace(defaultHalfSpacing),
                   Flexible(
                     child: InputField(
-                      onChangeText: (_) {},
-                      hintText: 'Last Name',
+                      onChangeText: onChangeLastName,
+                      hintText: lastNameLabel,
                     ),
                   ),
                 ],
               ),
               verticalSpaceHalf,
               InputField(
-                onChangeText: (email) => onChangeEmail(email),
-                hintText: 'Email',
+                onChangeText: onChangeEmail,
+                hintText: emailLabel,
                 icon: Icons.email,
               ),
               verticalSpaceHalf,
               InputField(
                 obscureText: true,
-                onChangeText: (password) => onChangePassword(password),
-                hintText: 'Password',
+                onChangeText: onChangePassword,
+                hintText: passwordHint,
                 icon: Icons.lock,
               ),
               verticalSpaceHalf,
               InputField(
                 obscureText: true,
                 onChangeText: (confirmPassword) => onChangeConfirmPassword(confirmPassword),
-                hintText: 'Confirm Password ',
+                hintText: confirmPasswordLabel,
                 icon: Icons.lock_open_outlined,
               ),
               verticalSpaceHalf,
               Row(
                 children: [
                   Radio<bool>(
-                    value: false, // assign boolean in state
+                    toggleable: true,
+                    value: agreeToTerms,
                     groupValue: true,
-                    onChanged: (value) {},
+                    onChanged: (value) => onChangeAgreeToTerms(value ?? false),
                   ),
                   Flexible(
                     child: RichText(
                       text: TextSpan(
                         style: TextStyles.body2,
                         children: <TextSpan>[
+                          // TODO: improve this
                           const TextSpan(text: 'I have read and accept the '),
                           TextSpan(
                             text: 'Terms of Service ',
@@ -134,7 +143,7 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     PrimaryButton(
-                      onPressed: () {},
+                      onPressed: onSignUpWithEmailAndPassword,
                       label: signUpLabel,
                       color: Colors.blueAccent,
                       width: _signUpButtonWidth,

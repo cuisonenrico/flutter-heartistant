@@ -8,7 +8,7 @@ part 'user_state.g.dart';
 class UserState with _$UserState {
   const factory UserState({
     @Default(false) bool isLoggedIn,
-    UserDto? user,
+    @Default(UserDto()) UserDto user,
   }) = _UserState;
 
   factory UserState.fromJson(Map<String, dynamic> json) => _$UserStateFromJson(json);
