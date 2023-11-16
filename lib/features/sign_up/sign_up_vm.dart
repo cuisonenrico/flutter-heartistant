@@ -17,6 +17,7 @@ class SignUpVmFactory extends VmFactory<AppState, SignUpConnector, SignUpVm> {
         onSignUpWithEmailAndPassword: _onSignUpWithEmailAndPassword,
         agreeToTerms: state.signUpFormState.agreeToTerms,
         passwordMismatchEvt: state.passwordMismatchEvt,
+        inputErrorList: state.inputErrorList,
       );
 
   void _onChangeFirstName(String? firstname) => dispatch(SetFirstNameAction(firstname));
@@ -41,11 +42,9 @@ class SignUpVm extends Vm {
     required this.onDisposeSignupForm,
     required this.onSignUpWithEmailAndPassword,
     required this.agreeToTerms,
+    required this.inputErrorList,
     this.passwordMismatchEvt,
-  }) : super(equals: [
-          agreeToTerms,
-          passwordMismatchEvt,
-        ]);
+  }) : super(equals: [agreeToTerms, passwordMismatchEvt, inputErrorList]);
 
   final ValueChanged<String?> onChangeFirstName;
   final ValueChanged<String?> onChangeLastName;
@@ -57,6 +56,7 @@ class SignUpVm extends Vm {
   final VoidCallback onSignUpWithEmailAndPassword;
 
   final bool agreeToTerms;
+  final List<String> inputErrorList;
 
   // Events
   final Event<bool>? passwordMismatchEvt;

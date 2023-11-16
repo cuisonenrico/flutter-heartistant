@@ -32,6 +32,7 @@ class SignUpConnector extends StatelessWidget {
         onDisposeSignupForm: vm.onDisposeSignupForm,
         onSignUpWithEmailAndPassword: vm.onSignUpWithEmailAndPassword,
         agreeToTerms: vm.agreeToTerms,
+        inputErrorList: vm.inputErrorList,
       ),
     );
   }

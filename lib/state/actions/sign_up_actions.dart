@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter_heartistant/state/actions/event_actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/enums/sign_up_enums.dart';
 import 'package:flutter_heartistant/utilities/extensions/signup_form_ext.dart';
-import 'package:flutter_heartistant/utilities/extensions/string_ext.dart';
 import 'package:flutter_heartistant/utilities/login/authentication_handler_impl.dart';
 
 /// Disposes [SignUpFormState]
@@ -80,6 +81,37 @@ class SetEmailAction extends ReduxAction<AppState> {
   AppState reduce() => state.copyWith.signUpFormState(email: email);
 }
 
+class DisposeInputErrorListAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() => state.copyWith(inputErrorList: []);
+}
+
+/// Sets the list of input errors in state
+class SetInputErrorListAction extends ReduxAction<AppState> {
+  SetInputErrorListAction();
+
+  @override
+  AppState? reduce() {
+    final signUpFormState = state.signUpFormState;
+
+    final firstName = signUpFormState.firstName;
+    final lastName = signUpFormState.lastName;
+    final email = signUpFormState.email;
+    final password = signUpFormState.password;
+    final confirmPassword = signUpFormState.confirmPassword;
+
+    // TODO: add necessary validations
+    final list = [
+      firstName.isNullOrBlank ? SignUpErrorCodes.FIRST_NAME.label : null,
+      lastName.isNullOrBlank ? SignUpErrorCodes.LAST_NAME.label : null,
+      email.isNullOrBlank ? SignUpErrorCodes.EMAIL.label : null,
+      password.isNullOrBlank ? SignUpErrorCodes.PASSWORD.label : null,
+      confirmPassword.isNullOrBlank ? SignUpErrorCodes.CONFIRM_PASSWORD.label : null,
+    ].mapNotNull((code) => code).toList();
+    return state.copyWith(inputErrorList: list);
+  }
+}
+
 /// Registers user using email and password
 class SignUpWithEmailAndPasswordAction extends ReduxAction<AppState> {
   bool didSucceed = false;
@@ -92,6 +124,7 @@ class SignUpWithEmailAndPasswordAction extends ReduxAction<AppState> {
     final confirmPassword = signUpFormState.confirmPassword;
 
     // TODO: add validations i.e. email format, password length, ticked agree to terms of service
+    // dispatch(SetInputErrorListAction());
     if (password != confirmPassword) {
       // Set an event notifying a mismatch between password and confirm password
       dispatch(SetPasswordMismatchEvent());
@@ -123,7 +156,7 @@ class SignUpWithEmailAndPasswordAction extends ReduxAction<AppState> {
     // If register is successful
     // TODO: reevaluate behavior
     dispatch(SetLoginSuccessEvt(didSucceed));
-    dispatch(DisposeSignUpFormAction());
+    // dispatch(DisposeSignUpFormAction());
     super.after();
   }
 }
