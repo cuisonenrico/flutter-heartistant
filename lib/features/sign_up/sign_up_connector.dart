@@ -23,12 +23,16 @@ class SignUpConnector extends StatelessWidget {
       onDidChange: (_, __, vm) => _consumeEvents(vm),
       vm: () => SignUpVmFactory(),
       builder: (_, vm) => SignUpScreen(
+        onChangeFirstName: vm.onChangeFirstName,
+        onChangeLastName: vm.onChangeLastName,
         onChangeEmail: vm.onChangeEmail,
-        onChangeUsername: vm.onChangeUsername,
         onChangePassword: vm.onChangePassword,
         onChangeConfirmPassword: vm.onChangeConfirmPassword,
+        onChangeAgreeToTerms: vm.onChangeAgreeToTerms,
         onDisposeSignupForm: vm.onDisposeSignupForm,
         onSignUpWithEmailAndPassword: vm.onSignUpWithEmailAndPassword,
+        agreeToTerms: vm.agreeToTerms,
+        inputErrorList: vm.inputErrorList,
       ),
     );
   }
