@@ -7,6 +7,8 @@ import 'package:flutter_heartistant/features/widgets/input_field.dart';
 import 'package:flutter_heartistant/features/widgets/primary_button.dart';
 import 'package:flutter_heartistant/gen/assets.gen.dart';
 import 'package:flutter_heartistant/utilities/colors.dart';
+import 'package:flutter_heartistant/utilities/enums/sign_up_enums.dart';
+import 'package:flutter_heartistant/utilities/extensions/signup_form_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,20 +19,29 @@ const double _signUpIconSize = 25.0;
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({
     required this.onChangeEmail,
-    required this.onChangeUsername,
+    required this.onChangeFirstName,
+    required this.onChangeLastName,
     required this.onChangePassword,
     required this.onChangeConfirmPassword,
+    required this.onChangeAgreeToTerms,
     required this.onDisposeSignupForm,
     required this.onSignUpWithEmailAndPassword,
+    required this.agreeToTerms,
+    required this.inputErrorList,
     super.key,
   });
 
+  final ValueChanged<String?> onChangeFirstName;
+  final ValueChanged<String?> onChangeLastName;
   final ValueChanged<String?> onChangeEmail;
-  final ValueChanged<String?> onChangeUsername;
   final ValueChanged<String?> onChangePassword;
   final ValueChanged<String?> onChangeConfirmPassword;
+  final ValueChanged<bool> onChangeAgreeToTerms;
   final VoidCallback onDisposeSignupForm;
   final VoidCallback onSignUpWithEmailAndPassword;
+
+  final bool agreeToTerms;
+  final List<String> inputErrorList;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
       appBar: const MyAppBar(
         backIconSubstitute: Icons.close,
         isSecondaryIconVisible: false,
-        label: '',
+        label: emptyString,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,52 +74,59 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Flexible(
                     child: InputField(
-                      onChangeText: (_) {},
-                      hintText: 'First Name',
+                      errorText: SignUpErrorCodes.FIRST_NAME.validate(inputErrorList),
+                      onChangeText: onChangeFirstName,
+                      hintText: firstNameLabel,
                     ),
                   ),
                   const HorizontalSpace(defaultHalfSpacing),
                   Flexible(
                     child: InputField(
-                      onChangeText: (_) {},
-                      hintText: 'Last Name',
+                      errorText: SignUpErrorCodes.LAST_NAME.validate(inputErrorList),
+                      onChangeText: onChangeLastName,
+                      hintText: lastNameLabel,
                     ),
                   ),
                 ],
               ),
               verticalSpaceHalf,
               InputField(
-                onChangeText: (email) => onChangeEmail(email),
-                hintText: 'Email',
+                errorText: SignUpErrorCodes.EMAIL.validate(inputErrorList),
+                onChangeText: onChangeEmail,
+                hintText: emailLabel,
                 icon: Icons.email,
               ),
               verticalSpaceHalf,
               InputField(
+                errorText: SignUpErrorCodes.PASSWORD.validate(inputErrorList),
                 obscureText: true,
-                onChangeText: (password) => onChangePassword(password),
-                hintText: 'Password',
+                onChangeText: onChangePassword,
+                hintText: passwordHint,
                 icon: Icons.lock,
               ),
               verticalSpaceHalf,
               InputField(
+                errorText: SignUpErrorCodes.CONFIRM_PASSWORD.validate(inputErrorList),
                 obscureText: true,
                 onChangeText: (confirmPassword) => onChangeConfirmPassword(confirmPassword),
-                hintText: 'Confirm Password ',
+                hintText: confirmPasswordLabel,
                 icon: Icons.lock_open_outlined,
               ),
               verticalSpaceHalf,
               Row(
                 children: [
                   Radio<bool>(
-                    value: false, // assign boolean in state
+                    toggleable: true,
+                    value: agreeToTerms,
                     groupValue: true,
-                    onChanged: (value) {},
+                    onChanged: (value) => onChangeAgreeToTerms(value ?? false),
                   ),
                   Flexible(
                     child: RichText(
                       text: TextSpan(
                         style: TextStyles.body2,
                         children: <TextSpan>[
+                          // TODO: improve this
                           const TextSpan(text: 'I have read and accept the '),
                           TextSpan(
                             text: 'Terms of Service ',
@@ -134,7 +152,7 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     PrimaryButton(
-                      onPressed: () {},
+                      onPressed: onSignUpWithEmailAndPassword,
                       label: signUpLabel,
                       color: Colors.blueAccent,
                       width: _signUpButtonWidth,

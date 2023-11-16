@@ -6,6 +6,7 @@ class InputField extends StatelessWidget {
   const InputField({
     required this.onChangeText,
     this.hintText = 'Input Here',
+    this.errorText,
     this.obscureText = false,
     this.icon,
     this.padding,
@@ -13,10 +14,12 @@ class InputField extends StatelessWidget {
   });
 
   final String hintText;
+  final String? errorText;
   final bool obscureText;
   final IconData? icon;
-  final ValueChanged<String> onChangeText;
   final EdgeInsets? padding;
+
+  final ValueChanged<String> onChangeText;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,15 @@ class InputField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
+          errorText: errorText,
+          errorBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 1,
+              style: BorderStyle.solid,
+            ),
+          ),
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(

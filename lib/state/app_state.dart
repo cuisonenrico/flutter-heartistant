@@ -16,9 +16,9 @@ class AppState with _$AppState {
     @Default(SignUpFormState()) SignUpFormState signUpFormState,
     @Default(UserState()) UserState userState,
     @Default(MainPageState()) MainPageState mainPageState,
+    @JsonKey(includeFromJson: false) @Default(<String>[]) List<String> inputErrorList,
 
     // Events
-    @JsonKey(includeFromJson: false) Event<String>? errorStringEvt,
     @JsonKey(includeFromJson: false) Event<bool>? loginSuccessEvt,
     @JsonKey(includeFromJson: false) Event<bool>? passwordMismatchEvt,
   }) = _AppState;
