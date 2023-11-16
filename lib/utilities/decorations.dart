@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/utilities/colors.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/utilities/colors.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
 final defaultShadow = BoxShadow(
   color: cardShadowColor,

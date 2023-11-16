@@ -1,10 +1,10 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_authentication/features/landing/landing_page_connector.dart';
-import 'package:flutter_authentication/features/login/login_screen.dart';
-import 'package:flutter_authentication/features/login/login_screen_vm.dart';
-import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/utilities/app_router.dart';
+import 'package:flutter_heartistant/features/landing/landing_page_connector.dart';
+import 'package:flutter_heartistant/features/login/login_screen.dart';
+import 'package:flutter_heartistant/features/login/login_screen_vm.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/app_router.dart';
 
 class LoginScreenConnector extends StatelessWidget {
   const LoginScreenConnector({super.key});
@@ -18,9 +18,9 @@ class LoginScreenConnector extends StatelessWidget {
 
       if (loginSuccess == true) {
         router.pushNamed(LandingPageConnector.routeName);
+      } else {
+        vm.onDisposeCredentials();
       }
-
-      // vm.onSetLoginErrorMessage('Invalid Credentials');
     }
   }
 
@@ -32,9 +32,10 @@ class LoginScreenConnector extends StatelessWidget {
       builder: (_, vm) => LoginScreen(
         onChangeId: vm.onChangeId,
         onChangePassword: vm.onChangePassword,
-        onDisposeCredentials: vm.onDisposeCredentials,
         onLogin: vm.onLogin,
         loginErrorMessage: vm.loginErrorMessage,
+        onLoginWithGoogle: vm.onLoginWithGoogle,
+        onLoginWithFacebook: vm.onLoginWithFacebook,
       ),
     );
   }

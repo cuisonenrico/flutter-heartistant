@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/styles/spacers.dart';
-import 'package:flutter_authentication/features/styles/styles.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     required this.onPressed,
     required this.label,
     this.color,
+    this.labelColor,
     this.gradient,
     this.height,
     this.width,
@@ -15,12 +16,14 @@ class PrimaryButton extends StatelessWidget {
     this.suffix,
     this.leading,
     this.borderRadius,
+    this.border,
     Key? key,
   }) : super(key: key);
 
   final VoidCallback onPressed;
   final String label;
   final Color? color;
+  final Color? labelColor;
   final Gradient? gradient;
   final double? height;
   final double? width;
@@ -28,6 +31,7 @@ class PrimaryButton extends StatelessWidget {
   final Widget? suffix;
   final Widget? leading;
   final BorderRadius? borderRadius;
+  final Border? border;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +42,12 @@ class PrimaryButton extends StatelessWidget {
         color: color,
         gradient: gradient,
         borderRadius: borderRadius ?? BorderRadius.circular(defaultQuarterRadius),
+        border: border,
       ),
       child: ElevatedButton(
         onPressed: () {
           onPressed();
-          FocusScope.of(context).requestFocus(FocusNode());
+          FocusScope.of(context).unfocus();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
@@ -59,7 +64,7 @@ class PrimaryButton extends StatelessWidget {
             ],
             Text(
               label,
-              style: TextStyles.primaryButtonText,
+              style: TextStyles.primaryButtonText.copyWith(color: labelColor),
             ),
             if (suffix != null) ...[
               const HorizontalSpace(defaultHalfSpacing),

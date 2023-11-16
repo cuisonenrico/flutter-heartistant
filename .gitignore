@@ -56,3 +56,5 @@ ios/firebase_app_id_file.json
 lib/firebase_options.dart
 macos/firebase_app_id_file.json
 macos/Runner/GoogleService-Info.plist
+#strings xml contains the id and client token for fb login
+android/app/src/main/res/values/strings.xml

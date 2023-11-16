@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/features/widgets/app_bar_label.dart';
-import 'package:flutter_authentication/features/widgets/app_icon_button.dart';
-import 'package:flutter_authentication/utilities/widget_constants.dart';
+import 'package:flutter_heartistant/features/widgets/app_bar_label.dart';
+import 'package:flutter_heartistant/features/widgets/app_icon_button.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:go_router/go_router.dart';
 
-const double _backButtonSize = 40.0;
+const double _backButtonSize = 25.0;
 
 class MyAppBar extends StatelessWidget {
   const MyAppBar({
-    required this.onSecondaryActionPressed,
     required this.label,
+    this.onSecondaryActionPressed,
     this.onPressBack,
     this.secondaryActionIcon = Icons.menu,
     this.isSecondaryIconVisible = true,
@@ -18,10 +18,11 @@ class MyAppBar extends StatelessWidget {
     this.subLabel,
     this.isCornersRounded = true,
     this.isShadowVisible = true,
+    this.backIconSubstitute,
     super.key,
   });
 
-  final VoidCallback onSecondaryActionPressed;
+  final VoidCallback? onSecondaryActionPressed;
   final VoidCallback? onPressBack;
 
   final bool isCornersRounded;
@@ -32,6 +33,7 @@ class MyAppBar extends StatelessWidget {
   final bool isShadowVisible;
   final TextStyle? labelTextStyle;
   final String? subLabel;
+  final IconData? backIconSubstitute;
 
   double get _verticalPadding => subLabel != null ? defaultHalfPadding : defaultQuarterPadding;
 
@@ -57,8 +59,8 @@ class MyAppBar extends StatelessWidget {
           children: [
             if (isBackButtonVisible)
               AppIconButton(
-                icon: const Icon(
-                  Icons.chevron_left_rounded,
+                icon: Icon(
+                  backIconSubstitute ?? Icons.chevron_left_rounded,
                   size: _backButtonSize,
                   color: Colors.black,
                 ),
@@ -71,16 +73,11 @@ class MyAppBar extends StatelessWidget {
                 labelTextStyle: labelTextStyle,
               ),
             ),
-            // if (!isProfilePage && !isLoginPage)
-            //   AppIconButton(
-            //     onPressed: () => context.pushNamed(ProfilePageConnector.routeName),
-            //     icon: const Icon(Icons.person),
-            //   ),
-            // if (isSecondaryIconVisible)
-            //   AppIconButton(
-            //     onPressed: onSecondaryActionPressed,
-            //     icon: Icon(secondaryActionIcon),
-            //   ),
+            if (isSecondaryIconVisible)
+              AppIconButton(
+                onPressed: onSecondaryActionPressed,
+                icon: Icon(secondaryActionIcon),
+              ),
           ],
         ),
       ),

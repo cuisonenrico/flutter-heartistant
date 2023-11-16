@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
-import 'package:flutter_authentication/state/actions/event_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/utilities/extensions/string_ext.dart';
-import 'package:flutter_authentication/utilities/login/authentication_handler_impl.dart';
+import 'package:flutter_heartistant/state/actions/event_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/extensions/string_ext.dart';
+import 'package:flutter_heartistant/utilities/login/authentication_handler_impl.dart';
 
 /// Disposes [SignUpFormState]
 class DisposeSignUpFormAction extends ReduxAction<AppState> {

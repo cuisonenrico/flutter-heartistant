@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_authentication/state/actions/event_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
-import 'package:flutter_authentication/utilities/login/authentication_handler_impl.dart';
+import 'package:flutter_heartistant/state/actions/event_actions.dart';
+import 'package:flutter_heartistant/state/actions/user_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/handlers/users_handler.dart';
+import 'package:flutter_heartistant/utilities/login/authentication_handler_impl.dart';
 
 /// Sets the [identifier] in loginFormState
 class SetIdentifierAction extends ReduxAction<AppState> {
@@ -42,6 +46,41 @@ class SetLoginErrorMessageAction extends ReduxAction<AppState> {
   AppState reduce() => state.copyWith.loginFormState(errorMessage: loginErrorMessage);
 }
 
+/// Attempts to login with [Google] and sets user in state
+class LoginWithGoogleAction extends ReduxAction<AppState> {
+  LoginWithGoogleAction();
+
+  @override
+  Future<AppState> reduce() async {
+    final user = await UsersHandler().signInWithGoogle();
+
+    final userEntity = user.user;
+
+    if (userEntity == null) return state;
+
+    dispatch(UserLoginAction(userEntity));
+
+    return state;
+  }
+}
+
+/// Attempts to login with [Facebook] and sets user in state
+class LoginWithFacebookAction extends ReduxAction<AppState> {
+  LoginWithFacebookAction();
+
+  @override
+  Future<AppState> reduce() async {
+    final user = await UsersHandler().signInWithFacebook();
+    final userEntity = user?.user;
+
+    if (userEntity == null) return state;
+
+    dispatch(UserLoginAction(userEntity));
+
+    return state;
+  }
+}
+
 /// Try login given the credentials in state then set [loginSuccessEvt]
 class LoginUserAction extends ReduxAction<AppState> {
   LoginUserAction();
@@ -65,9 +104,6 @@ class LoginUserAction extends ReduxAction<AppState> {
     }
 
     dispatch(SetLoginSuccessEvt(isSuccess));
-
-    // Clears credentials stored in state
-    dispatch(DisposeCredentialsAction());
 
     return state;
   }

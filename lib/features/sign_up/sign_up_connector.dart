@@ -1,8 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_authentication/features/sign_up/sign_up.dart';
-import 'package:flutter_authentication/features/sign_up/sign_up_vm.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/features/sign_up/sign_up.dart';
+import 'package:flutter_heartistant/features/sign_up/sign_up_vm.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 
 class SignUpConnector extends StatelessWidget {
   const SignUpConnector({super.key});

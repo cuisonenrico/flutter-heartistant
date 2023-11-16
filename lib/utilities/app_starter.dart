@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_authentication/authentication_app.dart';
-import 'package:flutter_authentication/firebase_options.dart';
-import 'package:flutter_authentication/state/actions/user_actions.dart';
-import 'package:flutter_authentication/state/app_state.dart';
+import 'package:flutter_heartistant/authentication_app.dart';
+import 'package:flutter_heartistant/firebase_options.dart';
+import 'package:flutter_heartistant/state/actions/user_actions.dart';
+import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -25,9 +25,15 @@ Future<void> startApp() async {
 
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-      FirebaseAuth.instance
-          .authStateChanges()
-          .listen((User? user) => store.dispatch(SetUserLoggedInStatus(user != null)));
+      final currUser = FirebaseAuth.instance.currentUser;
+
+      if (currUser != null) await store.dispatch(UserLoginAction(currUser));
+
+      FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+        if (user != null && user.uid != currUser?.uid) {
+          await store.dispatch(UserLoginAction(user));
+        }
+      });
 
       runApp(
         StoreProvider<AppState>(
