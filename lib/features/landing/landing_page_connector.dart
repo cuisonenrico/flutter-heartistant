@@ -15,7 +15,6 @@ class LandingPageConnector extends StatelessWidget {
     return StoreConnector<AppState, LandingPageVm>(
       vm: () => LandingPageVmFactory(),
       builder: (_, vm) => LandingPage(
-        onLogOut: vm.onLogOut,
         pageViewIndex: vm.pageViewIndex,
         onChangePageViewIndex: vm.onChangePageViewIndex,
       ),

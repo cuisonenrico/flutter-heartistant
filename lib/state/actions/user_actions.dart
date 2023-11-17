@@ -17,7 +17,8 @@ class SetUserLoggedInStatus extends ReduxAction<AppState> {
 class UserLoginAction extends ReduxAction<AppState> {
   UserLoginAction(this.user);
 
-  User user;
+  final User user;
+
   @override
   Future<AppState> reduce() async {
     final userDto = await UsersHandler().userLogin(user);

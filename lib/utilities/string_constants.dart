@@ -13,3 +13,5 @@ const confirmPasswordLabel = 'Confirm Password';
 
 const emptyString = '';
 const space = ' ';
+
+const editLabel = 'Edit';
