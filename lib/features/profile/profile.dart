@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
 import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/features/widgets/circular_image_container.dart';
 import 'package:flutter_heartistant/features/widgets/floating_container.dart';
 import 'package:flutter_heartistant/features/widgets/labeled_info.dart';
@@ -38,11 +39,15 @@ class Profile extends StatelessWidget {
                     imageUrl:
                         'https://firebasestorage.googleapis.com/v0/b/flutter-project-d2944.appspot.com/o/heartistant_logo.png?alt=media&token=deb54aa7-069d-4202-af59-d544095272b7',
                   ),
-                  const HorizontalSpace(defaultSpacing),
+                  const HorizontalSpace(defaultHalfSpacing),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(userDto.displayName ?? emptyString),
+                      Text(
+                        userDto.displayName ?? emptyString,
+                        style: TextStyles.headline2.copyWith(color: Colors.black),
+                      ),
+                      const VerticalSpace(defaultQuarterSpacing),
                       Text(userDto.email ?? emptyString),
                     ],
                   )
@@ -85,6 +90,29 @@ class Profile extends StatelessWidget {
               ),
             ),
             verticalSpaceHalf,
+            FloatingContainer(
+              cardTitle: 'Allergies',
+              onPressedSecondary: () {},
+              padding: const EdgeInsets.all(defaultHalfPadding),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  LabeledInfo(
+                    label: 'Food Allergies:',
+                    info: 'Peanuts, Bread',
+                  ),
+                  LabeledInfo(
+                    label: 'Drug Allergies',
+                    info: 'Paracetamol',
+                  ),
+                  LabeledInfo(
+                    label: 'Other',
+                    info: 'N/A',
+                  ),
+                ],
+              ),
+            ),
+            verticalSpaceHalf,
             Center(
               child: PrimaryButton(
                 width: 200,
@@ -96,6 +124,7 @@ class Profile extends StatelessWidget {
                 color: Colors.redAccent,
               ),
             ),
+            verticalSpaceHalf,
           ],
         ),
       ),
