@@ -50,7 +50,10 @@ class UsersHandler implements FirestoreUsers {
     final userCred = await FirebaseAuth.instance.signInWithCredential(credential);
 
     // TODO: Test signing up with socials
-    // await userLogin(userCred.user,displayName: userCred.user?.displayName,);
+    await userLogin(
+      userCred.user,
+      displayName: userCred.user?.displayName,
+    );
     // Once signed in, return the UserCredential
     return userCred;
   }
@@ -66,10 +69,13 @@ class UsersHandler implements FirestoreUsers {
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(token);
 
-    final userCred = FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    final userCred = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
     // TODO: Test signing up with socials
-    // await userLogin(userCred.user,displayName: userCred.user?.displayName,);
+    await userLogin(
+      userCred.user,
+      displayName: userCred.user?.displayName,
+    );
     // Once signed in, return the UserCredential
     return userCred;
   }
