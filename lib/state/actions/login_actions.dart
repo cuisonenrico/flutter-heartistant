@@ -59,6 +59,7 @@ class LoginWithGoogleAction extends ReduxAction<AppState> {
     if (userEntity == null) return state;
 
     dispatch(UserLoginAction(userEntity));
+    dispatch(SetLoginSuccessEvt(true));
 
     return state;
   }
@@ -76,6 +77,7 @@ class LoginWithFacebookAction extends ReduxAction<AppState> {
     if (userEntity == null) return state;
 
     dispatch(UserLoginAction(userEntity));
+    dispatch(SetLoginSuccessEvt(true));
 
     return state;
   }
