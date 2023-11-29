@@ -99,15 +99,18 @@ class SetInputErrorListAction extends ReduxAction<AppState> {
     final email = signUpFormState.email;
     final password = signUpFormState.password;
     final confirmPassword = signUpFormState.confirmPassword;
+    final agreeToTerms = signUpFormState.agreeToTerms;
 
     // TODO: add necessary validations
     final list = [
-      firstName.isNullOrBlank ? SignUpErrorCodes.FIRST_NAME.label : null,
-      lastName.isNullOrBlank ? SignUpErrorCodes.LAST_NAME.label : null,
-      email.isNullOrBlank ? SignUpErrorCodes.EMAIL.label : null,
-      password.isNullOrBlank ? SignUpErrorCodes.PASSWORD.label : null,
-      confirmPassword.isNullOrBlank ? SignUpErrorCodes.CONFIRM_PASSWORD.label : null,
+      firstName.isNullOrBlank ? SignUpErrorCodes.FIRST_NAME : null,
+      lastName.isNullOrBlank ? SignUpErrorCodes.LAST_NAME : null,
+      email.isNullOrBlank ? SignUpErrorCodes.EMAIL : null,
+      password.isNullOrBlank ? SignUpErrorCodes.PASSWORD : null,
+      confirmPassword.isNullOrBlank ? SignUpErrorCodes.CONFIRM_PASSWORD : null,
+      agreeToTerms == false ? SignUpErrorCodes.TERMS : null,
     ].mapNotNull((code) => code).toList();
+
     return state.copyWith(inputErrorList: list);
   }
 }
@@ -116,7 +119,7 @@ class SetInputErrorListAction extends ReduxAction<AppState> {
 class SignUpWithEmailAndPasswordAction extends ReduxAction<AppState> {
   bool didSucceed = false;
   @override
-  Future<AppState> reduce() async {
+  Future<AppState?> reduce() async {
     final authHndlr = AuthenticationHandlerImpl();
     final signUpFormState = state.signUpFormState;
     final email = signUpFormState.email;
@@ -124,7 +127,7 @@ class SignUpWithEmailAndPasswordAction extends ReduxAction<AppState> {
     final confirmPassword = signUpFormState.confirmPassword;
 
     // TODO: add validations i.e. email format, password length, ticked agree to terms of service
-    // dispatch(SetInputErrorListAction());
+    dispatch(SetInputErrorListAction());
     if (password != confirmPassword) {
       // Set an event notifying a mismatch between password and confirm password
       dispatch(SetPasswordMismatchEvent());
@@ -133,7 +136,7 @@ class SignUpWithEmailAndPasswordAction extends ReduxAction<AppState> {
       return state;
     }
 
-    if (email.isNullOrBlank || password.isNullOrBlank || confirmPassword.isNullOrBlank) return state;
+    if (email.isNullOrBlank || password.isNullOrBlank || confirmPassword.isNullOrBlank) return null;
 
     final userDto = await authHndlr.createUserWithEmailAndPassword(
       email: email!,

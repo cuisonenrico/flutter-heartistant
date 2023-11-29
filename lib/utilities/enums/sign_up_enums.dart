@@ -5,7 +5,8 @@ enum SignUpErrorCodes {
   LAST_NAME(lastNameLabel),
   EMAIL(emailLabel),
   PASSWORD(passwordHint),
-  CONFIRM_PASSWORD(confirmPasswordLabel);
+  CONFIRM_PASSWORD(confirmPasswordLabel),
+  TERMS(terms);
 
   final String label;
   const SignUpErrorCodes(this.label);

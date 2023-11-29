@@ -7,25 +7,24 @@ extension SignUpExt on SignUpFormState {
 }
 
 extension SignUpErrors on SignUpErrorCodes {
-  String? validate(List<String> inputErrorList) {
-    return inputErrorList.contains(label) ? errorMessage : null;
+  String? validate(List<SignUpErrorCodes> inputErrorList) {
+    return inputErrorList.contains(this) ? errorMessage : null;
   }
 
   String get errorMessage {
     switch (this) {
       case SignUpErrorCodes.FIRST_NAME:
-        return 'Invalid first name';
+        return firstNameError;
       case SignUpErrorCodes.LAST_NAME:
-        return 'Invalid last name';
-
+        return lastNameError;
       case SignUpErrorCodes.EMAIL:
-        return 'Invalid email';
-
+        return emailError;
       case SignUpErrorCodes.PASSWORD:
-        return 'Invalid password';
-
+        return passwordError;
       case SignUpErrorCodes.CONFIRM_PASSWORD:
-        return 'Does not match password';
+        return confirmPasswordError;
+      case SignUpErrorCodes.TERMS:
+        return termsError;
     }
   }
 }

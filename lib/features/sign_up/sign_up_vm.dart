@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
 import 'package:flutter_heartistant/state/actions/sign_up_actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/enums/sign_up_enums.dart';
 
 class SignUpVmFactory extends VmFactory<AppState, SignUpConnector, SignUpVm> {
   @override
@@ -27,7 +28,11 @@ class SignUpVmFactory extends VmFactory<AppState, SignUpConnector, SignUpVm> {
   void _onChangeConfirmPassword(String? confirmPassword) => dispatch(SetConfirmPasswordAction(confirmPassword));
   void _onChangeAgreeToTerms(bool didAgree) => dispatch(SetAgreeToTermsAction(didAgree));
 
-  void _onDisposeSignupForm() => dispatch(DisposeSignUpFormAction());
+  void _onDisposeSignupForm() {
+    dispatch(DisposeSignUpFormAction());
+    dispatch(DisposeInputErrorListAction());
+  }
+
   void _onSignUpWithEmailAndPassword() => dispatch(SignUpWithEmailAndPasswordAction());
 }
 
@@ -44,7 +49,11 @@ class SignUpVm extends Vm {
     required this.agreeToTerms,
     required this.inputErrorList,
     this.passwordMismatchEvt,
-  }) : super(equals: [agreeToTerms, passwordMismatchEvt, inputErrorList]);
+  }) : super(equals: [
+          agreeToTerms,
+          passwordMismatchEvt,
+          inputErrorList,
+        ]);
 
   final ValueChanged<String?> onChangeFirstName;
   final ValueChanged<String?> onChangeLastName;
@@ -56,7 +65,7 @@ class SignUpVm extends Vm {
   final VoidCallback onSignUpWithEmailAndPassword;
 
   final bool agreeToTerms;
-  final List<String> inputErrorList;
+  final List<SignUpErrorCodes> inputErrorList;
 
   // Events
   final Event<bool>? passwordMismatchEvt;
