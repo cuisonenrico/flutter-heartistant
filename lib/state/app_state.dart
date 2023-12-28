@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:flutter_heartistant/state/chat_page_state/chat_page_state.dart';
 import 'package:flutter_heartistant/state/forms/login_form_state.dart';
 import 'package:flutter_heartistant/state/forms/sign_up_form_state.dart';
 import 'package:flutter_heartistant/state/main_page_state/main_page_state.dart';
@@ -17,16 +18,20 @@ class AppState with _$AppState {
     @Default(SignUpFormState()) SignUpFormState signUpFormState,
     @Default(UserState()) UserState userState,
     @Default(MainPageState()) MainPageState mainPageState,
+    @Default(ChatPageState()) ChatPageState chatPageState,
     @JsonKey(includeFromJson: false) @Default(<SignUpErrorCodes>[]) List<SignUpErrorCodes> inputErrorList,
 
     // Events
     @JsonKey(includeFromJson: false) Event<bool>? loginSuccessEvt,
     @JsonKey(includeFromJson: false) Event<bool>? passwordMismatchEvt,
+
+    // Wait
+    @Default(Wait.empty) @JsonKey(name: 'wait', includeFromJson: false) Wait wait,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
 
-  factory AppState.init() => AppState();
+  factory AppState.init() => AppState(wait: Wait());
 }
 
 abstract class StateSerializer<St> {

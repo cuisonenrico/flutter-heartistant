@@ -4,6 +4,8 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/landing/landing_page_connector.dart';
 import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
+import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
+import 'package:flutter_heartistant/features/messaging/chat_room/chat_room.dart';
 import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:go_router/go_router.dart';
@@ -38,7 +40,31 @@ final router = GoRouter(
         state: state,
         child: const LandingPageConnector(),
       ),
-      routes: const [],
+      routes: [
+        GoRoute(
+          path: ChatPageConnector.route,
+          name: ChatPageConnector.routeName,
+          builder: (_, __) => const ChatPageConnector(),
+          pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+            context: context,
+            state: state,
+            child: const ChatPageConnector(),
+          ),
+          routes: [
+            GoRoute(
+              path: ChatRoom.route,
+              name: ChatRoom.routeName,
+              builder: (_, __) => const ChatRoom(),
+              pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+                context: context,
+                state: state,
+                child: const ChatRoom(),
+              ),
+              routes: const [],
+            )
+          ],
+        )
+      ],
     ),
 
     /// Login Screen
