@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/utilities/colors.dart';
+import 'package:flutter_heartistant/utilities/string_constants.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
     required this.onChangeText,
-    this.hintText = 'Input Here',
+    this.hintText,
     this.errorText,
     this.obscureText = false,
     this.icon,
@@ -13,7 +14,7 @@ class InputField extends StatelessWidget {
     super.key,
   });
 
-  final String hintText;
+  final String? hintText;
   final String? errorText;
   final bool obscureText;
   final IconData? icon;
@@ -23,12 +24,9 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
-
     return Padding(
       padding: padding ?? EdgeInsets.zero,
       child: TextField(
-        controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
           errorText: errorText,
@@ -57,7 +55,7 @@ class InputField extends StatelessWidget {
               : null,
           fillColor: lightGrey,
           hintStyle: TextStyles.label2,
-          hintText: hintText,
+          hintText: hintText ?? inputHereHint,
         ),
         onChanged: (text) => onChangeText(text),
       ),

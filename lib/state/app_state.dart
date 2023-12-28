@@ -3,6 +3,7 @@ import 'package:flutter_heartistant/state/forms/login_form_state.dart';
 import 'package:flutter_heartistant/state/forms/sign_up_form_state.dart';
 import 'package:flutter_heartistant/state/main_page_state/main_page_state.dart';
 import 'package:flutter_heartistant/state/user_state/user_state.dart';
+import 'package:flutter_heartistant/utilities/enums/sign_up_enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_state.freezed.dart';
@@ -16,7 +17,7 @@ class AppState with _$AppState {
     @Default(SignUpFormState()) SignUpFormState signUpFormState,
     @Default(UserState()) UserState userState,
     @Default(MainPageState()) MainPageState mainPageState,
-    @JsonKey(includeFromJson: false) @Default(<String>[]) List<String> inputErrorList,
+    @JsonKey(includeFromJson: false) @Default(<SignUpErrorCodes>[]) List<SignUpErrorCodes> inputErrorList,
 
     // Events
     @JsonKey(includeFromJson: false) Event<bool>? loginSuccessEvt,

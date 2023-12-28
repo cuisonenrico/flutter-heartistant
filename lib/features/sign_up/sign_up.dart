@@ -12,6 +12,7 @@ import 'package:flutter_heartistant/utilities/extensions/signup_form_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 const double _signUpButtonWidth = 220.0;
 const double _signUpIconSize = 25.0;
@@ -41,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
   final VoidCallback onSignUpWithEmailAndPassword;
 
   final bool agreeToTerms;
-  final List<String> inputErrorList;
+  final List<SignUpErrorCodes> inputErrorList;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,11 @@ class SignUpScreen extends StatelessWidget {
     const verticalSpaceQuarter = VerticalSpace(defaultQuarterSpacing);
 
     return AppScaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
+        onPressBack: () {
+          context.pop();
+          onDisposeSignupForm();
+        },
         backIconSubstitute: Icons.close,
         isSecondaryIconVisible: false,
         label: emptyString,
@@ -61,12 +66,12 @@ class SignUpScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Create Account,',
+                createAccountLabel,
                 style: TextStyles.label1,
               ),
               const VerticalSpace(defaultQuarterSpacing),
               Text(
-                'Sign up to get started!',
+                getStartedLabel,
                 style: TextStyles.label2,
               ),
               verticalSpaceHalf,
@@ -127,16 +132,16 @@ class SignUpScreen extends StatelessWidget {
                         style: TextStyles.body2,
                         children: <TextSpan>[
                           // TODO: improve this
-                          const TextSpan(text: 'I have read and accept the '),
+                          const TextSpan(text: readAndAcceptPromptLabel),
                           TextSpan(
-                            text: 'Terms of Service ',
+                            text: termsOfServiceLabel,
                             style: TextStyles.body2.copyWith(
                               color: Colors.blueAccent,
                             ),
                           ),
-                          const TextSpan(text: 'and '),
+                          const TextSpan(text: andSpan),
                           TextSpan(
-                            text: 'Privacy Policy',
+                            text: privacyPolicyLabel,
                             style: TextStyles.body2.copyWith(
                               color: Colors.blueAccent,
                             ),
