@@ -84,7 +84,7 @@ class ChatRoom extends StatelessWidget {
               ),
               Expanded(
                 child: InkWell(
-                  onTap: () => onChatMessage,
+                  onTap: () => onChatMessage.call(),
                   child: const Icon(Icons.send),
                 ),
               )
