@@ -10,6 +10,8 @@ class ChatPageState with _$ChatPageState {
   const factory ChatPageState({
     @Default([]) List<UserDto> userList,
     @Default([]) List<ChatRoomDto> chatRooms,
+    ChatRoomDto? selectedChatRoom,
+    String? chatDraft,
   }) = _ChatPageState;
 
   factory ChatPageState.fromJson(Map<String, dynamic> json) => _$ChatPageStateFromJson(json);

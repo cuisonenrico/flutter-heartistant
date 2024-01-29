@@ -8,6 +8,7 @@ class InputField extends StatelessWidget {
     required this.onChangeText,
     this.hintText,
     this.errorText,
+    this.initialValue,
     this.obscureText = false,
     this.icon,
     this.padding,
@@ -16,6 +17,7 @@ class InputField extends StatelessWidget {
 
   final String? hintText;
   final String? errorText;
+  final String? initialValue;
   final bool obscureText;
   final IconData? icon;
   final EdgeInsets? padding;
@@ -26,7 +28,10 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding ?? EdgeInsets.zero,
-      child: TextField(
+      child: TextFormField(
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        initialValue: initialValue ?? emptyString,
         obscureText: obscureText,
         decoration: InputDecoration(
           errorText: errorText,

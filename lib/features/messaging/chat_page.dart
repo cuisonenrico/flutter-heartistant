@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_heartistant/features/messaging/chat_room/chat_room.dart';
+import 'package:flutter_heartistant/features/messaging/chat_room/chat_room_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/widgets/chat_room_box.dart';
 import 'package:flutter_heartistant/features/messaging/create_chat_room_page/create_chat_room_page_connector.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
@@ -56,7 +56,7 @@ class ChatPage extends StatelessWidget {
                 children: [
                   ...chatRooms.map(
                     (room) => ChatRoomBox(
-                      callback: () => context.pushNamed(ChatRoom.routeName),
+                      callback: () => context.pushNamed(ChatRoomConnector.routeName, extra: room.roomId),
                       displayName: users
                               .firstWhere(
                                   (element) => element.uid == room.recipientId || element.uid == room.roomCreatorId)

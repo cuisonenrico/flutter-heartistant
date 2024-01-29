@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:async_redux/async_redux.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter_heartistant/features/messaging/services/chat_service.dart';
 import 'package:flutter_heartistant/state/actions/actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/string_constants.dart';
 
 /// Gets the users in firestore and store in state
 class GetUserListAction extends LoadingAction {
@@ -59,11 +62,100 @@ class CreateChatRoomAction extends LoadingAction {
 
     if (newChatRoomId == null) return state;
 
-    final chatRooms = [
+    return state.copyWith(
+        chatPageState: state.chatPageState.copyWith(chatRooms: [
       ...state.chatPageState.chatRooms,
-      ...[newChatRoomId]
-    ];
+      ...[newChatRoomId],
+    ]));
+  }
+}
 
-    return state.copyWith(chatPageState: state.chatPageState.copyWith(chatRooms: chatRooms));
+/// Creates a Chat message between two users and stores in ChatRoom Array
+class ChatMessageAction extends LoadingAction {
+  ChatMessageAction() : super(actionKey: key);
+
+  static const key = 'chat-message';
+
+  @override
+  Future<AppState> reduce() async {
+    final selectedChatRoom = state.chatPageState.selectedChatRoom;
+    if (selectedChatRoom == null) return state;
+
+    final chatDraft = state.chatPageState.chatDraft;
+
+    if (chatDraft == null) return state;
+
+    final chatMessage = await ChatService().createChatMessage(
+      roomId: selectedChatRoom.roomId ?? emptyString,
+      senderId: state.userState.user.uid,
+      message: chatDraft,
+    );
+
+    if (chatMessage == null) return state;
+
+    return state.copyWith.chatPageState(
+        selectedChatRoom: selectedChatRoom.copyWith(messages: [
+      ...selectedChatRoom.messages,
+      ...[chatMessage]
+    ]));
+  }
+
+  @override
+  void after() {
+    dispatch(DisposeChatDraftAction());
+    super.after();
+  }
+}
+
+/// Selects a chatroom and stores the selected chat room's Id in state
+class SelectChatRoomAction extends ReduxAction<AppState> {
+  SelectChatRoomAction({required this.chatRoomId});
+
+  final String? chatRoomId;
+
+  @override
+  Future<AppState> reduce() async {
+    if (chatRoomId == null) return state;
+    final chatRoom = state.chatPageState.chatRooms.firstOrNullWhere((element) => element.roomId == chatRoomId);
+
+    final chatMessages = await ChatService().getChatMessages(chatRoomId!);
+
+    if (chatRoom == null || chatMessages == null) return state.copyWith.chatPageState(selectedChatRoom: chatRoom);
+
+    return state.copyWith.chatPageState(selectedChatRoom: chatRoom.copyWith(messages: chatMessages));
+  }
+}
+
+/// Clears selected Chat room id from state
+class DisposeSelectedChatRoomIdAction extends ReduxAction<AppState> {
+  DisposeSelectedChatRoomIdAction();
+
+  @override
+  AppState reduce() => state.copyWith.chatPageState(selectedChatRoom: null);
+
+  @override
+  void after() {
+    dispatch(DisposeChatDraftAction());
+    super.after();
+  }
+}
+
+/// Clears selected Chat Draft from state
+class DisposeChatDraftAction extends ReduxAction<AppState> {
+  DisposeChatDraftAction();
+
+  @override
+  AppState reduce() => state.copyWith.chatPageState(chatDraft: null);
+}
+
+/// Stores chat message in state
+class SetChatMessageDraftAction extends ReduxAction<AppState> {
+  SetChatMessageDraftAction(this.message);
+
+  final String? message;
+
+  @override
+  AppState reduce() {
+    return state.copyWith.chatPageState(chatDraft: message);
   }
 }

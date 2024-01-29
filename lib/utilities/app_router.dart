@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/landing/landing_page_connector.dart';
 import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
-import 'package:flutter_heartistant/features/messaging/chat_room/chat_room.dart';
+import 'package:flutter_heartistant/features/messaging/chat_room/chat_room_connector.dart';
 import 'package:flutter_heartistant/features/messaging/create_chat_room_page/create_chat_room_page_connector.dart';
 import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
@@ -53,13 +53,13 @@ final router = GoRouter(
           ),
           routes: [
             GoRoute(
-              path: ChatRoom.route,
-              name: ChatRoom.routeName,
-              builder: (_, __) => const ChatRoom(),
+              path: ChatRoomConnector.route,
+              name: ChatRoomConnector.routeName,
+              builder: (_, state) => ChatRoomConnector(roomId: state.extra as String),
               pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
                 context: context,
                 state: state,
-                child: const ChatRoom(),
+                child: ChatRoomConnector(roomId: state.extra as String),
               ),
               routes: const [],
             ),
@@ -117,11 +117,9 @@ CustomTransitionPage buildPageWithDefaultTransition<T>({
       key: state.pageKey,
       child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
-          position: animation.drive(
-            Tween<Offset>(
-              begin: const Offset(1, 1),
-              end: Offset.zero,
-            ).chain(CurveTween(curve: Curves.easeIn)),
-          ),
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(animation),
           child: child),
     );

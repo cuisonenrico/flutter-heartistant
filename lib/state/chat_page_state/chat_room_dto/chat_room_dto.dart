@@ -1,3 +1,4 @@
+import 'package:flutter_heartistant/state/chat_page_state/chat_dto/chat_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat_room_dto.freezed.dart';
@@ -10,14 +11,16 @@ class ChatRoomDto with _$ChatRoomDto {
     String? roomCreatorId,
     String? recipientId,
     String? creationDate,
+    @JsonKey(includeFromJson: false) @Default([]) List<ChatDto> messages,
   }) = _ChatRoomDto;
 
   factory ChatRoomDto.fromJson(Map<String, dynamic> json) => _$ChatRoomDtoFromJson(json);
 
-  factory ChatRoomDto.init() => const ChatRoomDto(
+  factory ChatRoomDto.init() => ChatRoomDto(
         roomId: null,
         roomCreatorId: null,
         recipientId: null,
         creationDate: null,
+        messages: List.empty(),
       );
 }
