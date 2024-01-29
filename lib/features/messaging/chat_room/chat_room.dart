@@ -18,6 +18,29 @@ class ChatRoom extends StatelessWidget {
         isSecondaryIconVisible: false,
         isMessagingIconVisible: false,
       ),
+      body: Column(
+        children: [
+          // Chat area
+          Expanded(
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                children: [
+                  ...List.generate(
+                    14,
+                    (index) => Row(
+                      mainAxisAlignment: index % 2 == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
+                      children: const [Text('Text sample ')],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Message preview
+          Container(height: 50, color: Colors.blueGrey),
+        ],
+      ),
     );
   }
 }

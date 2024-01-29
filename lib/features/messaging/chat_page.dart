@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/chat_room.dart';
-import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/messaging/chat_room/widgets/chat_room_box.dart';
+import 'package:flutter_heartistant/features/messaging/create_chat_room_page/create_chat_room_page_connector.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/features/widgets/app_bar.dart';
 import 'package:flutter_heartistant/features/widgets/app_scaffold.dart';
-import 'package:flutter_heartistant/features/widgets/floating_container.dart';
 import 'package:flutter_heartistant/features/widgets/input_field.dart';
+import 'package:flutter_heartistant/state/chat_page_state/chat_room_dto/chat_room_dto.dart';
 import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
@@ -13,11 +14,13 @@ import 'package:go_router/go_router.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({
-    required this.userList,
+    required this.chatRooms,
+    required this.users,
     super.key,
   });
 
-  final List<UserDto> userList;
+  final List<ChatRoomDto> chatRooms;
+  final List<UserDto> users;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +31,14 @@ class ChatPage extends StatelessWidget {
         isSecondaryIconVisible: false,
         isMessagingIconVisible: false,
       ),
-      floatingActionButton: const CircleAvatar(
-        radius: 30,
-        child: Icon(
-          Icons.add,
-          size: 30.0,
+      floatingActionButton: GestureDetector(
+        onTap: () => context.pushNamed(CreateChatRoomConnector.routeName),
+        child: const CircleAvatar(
+          radius: 30,
+          child: Icon(
+            Icons.add,
+            size: 30.0,
+          ),
         ),
       ),
       body: Column(
@@ -48,40 +54,14 @@ class ChatPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ...userList.map(
-                    (user) => FloatingContainer(
-                      padding: const EdgeInsets.only(
-                        top: defaultHalfPadding,
-                        bottom: defaultHalfPadding,
-                        left: defaultQuarterPadding,
-                        right: defaultQuarterPadding,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          // TODO: pass the id of the chat room / create chat room from user's Id and recipient's Id
-                          context.pushNamed(ChatRoom.routeName);
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const CircleAvatar(
-                              radius: 25,
-                            ),
-                            const HorizontalSpace(defaultHalfSpacing),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(user.displayName ?? emptyString),
-                                const VerticalSpace(defaultQuarterSpacing),
-                                Text(
-                                  'Latest Message',
-                                  style: TextStyles.body2,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                  ...chatRooms.map(
+                    (room) => ChatRoomBox(
+                      callback: () => context.pushNamed(ChatRoom.routeName),
+                      displayName: users
+                              .firstWhere(
+                                  (element) => element.uid == room.recipientId || element.uid == room.roomCreatorId)
+                              .displayName ??
+                          emptyString,
                     ),
                   ),
                 ],

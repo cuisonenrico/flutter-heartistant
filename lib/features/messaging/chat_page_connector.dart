@@ -15,9 +15,14 @@ class ChatPageConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ChatPageVm>(
       vm: () => ChatPageVmFactory(),
-      onInit: (store) async => store.dispatch(GetUserListAction()),
+      onInit: (store) async => store
+        ..dispatch(GetUserListAction())
+        ..dispatch(GetChatRoomsAction()),
       builder: (_, vm) => vm.chatPageState.when(
-        (userList) => ChatPage(userList: userList ?? []),
+        (chatRooms) => ChatPage(
+          chatRooms: chatRooms ?? [],
+          users: vm.users,
+        ),
         loading: () => const SizedBox(),
         error: (err) => Center(child: Text(err!)),
       ),

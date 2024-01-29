@@ -6,6 +6,7 @@ import 'package:flutter_heartistant/features/landing/landing_page_connector.dart
 import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/chat_room.dart';
+import 'package:flutter_heartistant/features/messaging/create_chat_room_page/create_chat_room_page_connector.dart';
 import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:go_router/go_router.dart';
@@ -59,6 +60,17 @@ final router = GoRouter(
                 context: context,
                 state: state,
                 child: const ChatRoom(),
+              ),
+              routes: const [],
+            ),
+            GoRoute(
+              path: CreateChatRoomConnector.route,
+              name: CreateChatRoomConnector.routeName,
+              builder: (_, __) => const CreateChatRoomConnector(),
+              pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+                context: context,
+                state: state,
+                child: const CreateChatRoomConnector(),
               ),
               routes: const [],
             )
