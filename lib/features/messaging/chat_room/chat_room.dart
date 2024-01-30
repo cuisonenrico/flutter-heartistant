@@ -9,7 +9,7 @@ import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
-class ChatRoom extends StatelessWidget {
+class ChatRoom extends StatefulWidget {
   const ChatRoom({
     required this.onChatMessage,
     required this.onChatChanged,
@@ -28,10 +28,22 @@ class ChatRoom extends StatelessWidget {
   final ChatRoomDto? chatRoom;
 
   @override
+  State<ChatRoom> createState() => _ChatRoomState();
+}
+
+class _ChatRoomState extends State<ChatRoom> {
+  late TextEditingController controller;
+  @override
+  void initState() {
+    controller = TextEditingController()..addListener(() => setState(() {}));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: MyAppBar(
-        label: recipient?.displayName ?? emptyString,
+        label: widget.recipient?.displayName ?? emptyString,
         labelTextStyle: TextStyles.headline2.copyWith(color: Colors.black),
         isSecondaryIconVisible: false,
         isMessagingIconVisible: false,
@@ -44,10 +56,10 @@ class ChatRoom extends StatelessWidget {
               reverse: true,
               child: Column(
                 children: [
-                  ...?chatRoom?.messages.map(
+                  ...?widget.chatRoom?.messages.map(
                     (room) => Row(
                       children: [
-                        room.senderId == sender.uid
+                        room.senderId == widget.sender.uid
                             ? MessagePill(
                                 showAvatar: false,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -75,15 +87,20 @@ class ChatRoom extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(defaultHalfPadding),
                   child: InputField(
-                    initialValue: chatDraft,
+                    keyboardInput: TextInputType.multiline,
+                    maxLines: null,
+                    controller: controller,
                     hintText: 'Message...',
-                    onChangeText: (text) => onChatChanged(text),
+                    onChangeText: (text) => widget.onChatChanged(text),
                   ),
                 ),
               ),
               Expanded(
                 child: InkWell(
-                  onTap: () => onChatMessage.call(),
+                  onTap: () {
+                    widget.onChatMessage.call();
+                    controller.clear();
+                  },
                   child: const Icon(Icons.send),
                 ),
               )

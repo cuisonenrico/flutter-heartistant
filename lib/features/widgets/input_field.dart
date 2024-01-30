@@ -14,7 +14,8 @@ class InputField extends StatelessWidget {
     this.icon,
     this.padding,
     this.keyboardInput,
-    this.maxLines,
+    this.maxLines = defaultIntOne,
+    this.controller,
     super.key,
   });
 
@@ -26,6 +27,7 @@ class InputField extends StatelessWidget {
   final EdgeInsets? padding;
   final TextInputType? keyboardInput;
   final int? maxLines;
+  final TextEditingController? controller;
 
   final ValueChanged<String> onChangeText;
 
@@ -34,9 +36,9 @@ class InputField extends StatelessWidget {
     return Padding(
       padding: padding ?? EdgeInsets.zero,
       child: TextFormField(
+        controller: controller,
         keyboardType: keyboardInput ?? TextInputType.multiline,
-        maxLines: maxLines ?? defaultIntOne,
-        initialValue: initialValue ?? emptyString,
+        maxLines: maxLines,
         obscureText: obscureText,
         decoration: InputDecoration(
           errorText: errorText,
