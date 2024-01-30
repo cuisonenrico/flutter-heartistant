@@ -24,6 +24,7 @@ class AppState with _$AppState {
     // Events
     @JsonKey(includeFromJson: false) Event<bool>? loginSuccessEvt,
     @JsonKey(includeFromJson: false) Event<bool>? passwordMismatchEvt,
+    @JsonKey(includeFromJson: false) Event<String>? chatRoomExistsEvt,
 
     // Wait
     @Default(Wait.empty) @JsonKey(name: 'wait', includeFromJson: false) Wait wait,
