@@ -5,6 +5,7 @@ import 'package:flutter_heartistant/state/actions/chat_page_actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:flutter_heartistant/state/chat_page_state/chat_room_dto/chat_room_dto.dart';
 import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
+import 'package:flutter_heartistant/utilities/extensions/wait_extensions.dart';
 
 class ChatPageVmFactory extends VmFactory<AppState, ChatPageConnector, ChatPageVm> {
   @override
@@ -16,12 +17,12 @@ class ChatPageVmFactory extends VmFactory<AppState, ChatPageConnector, ChatPageV
   List<UserDto> get _users => state.chatPageState.userList;
 
   UnionPageState<List<ChatRoomDto>> _getPageState() {
-    if (state.wait.isWaitingFor(GetUserListAction.key)) {
+    if (state.wait.isWaitingForKeys([GetUserListAction.key, GetChatRoomsAction.key])) {
       return const UnionPageState.loading();
     } else if (state.chatPageState.userList.isNotEmpty) {
       return UnionPageState(state.chatPageState.chatRooms);
     } else {
-      return const UnionPageState.error("Can't load Users");
+      return const UnionPageState.error("Can't load Chat Rooms");
     }
   }
 }

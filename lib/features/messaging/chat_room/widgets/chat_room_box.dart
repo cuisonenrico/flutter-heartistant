@@ -19,18 +19,15 @@ class ChatRoomBox extends StatelessWidget {
     return GestureDetector(
       onTap: () => callback.call(),
       child: FloatingContainer(
-        padding: const EdgeInsets.only(
-          top: defaultHalfPadding,
-          bottom: defaultHalfPadding,
-          left: defaultQuarterPadding,
-          right: defaultQuarterPadding,
+        padding: const EdgeInsets.symmetric(
+          horizontal: defaultHalfPadding,
+          vertical: defaultQuarterPadding,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              radius: 25,
-            ),
+            // TODO: add User profile image
+            const CircleAvatar(radius: 25),
             const HorizontalSpace(defaultHalfSpacing),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

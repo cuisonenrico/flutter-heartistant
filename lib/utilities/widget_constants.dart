@@ -35,3 +35,9 @@ final defaultBoxDecorationWithShadow = BoxDecoration(
   borderRadius: defaultBorderRadius,
   boxShadow: [defaultShadow],
 );
+
+// Icon Size
+const defaultIconSize = 30.0;
+
+//
+const defaultIntOne = 1;

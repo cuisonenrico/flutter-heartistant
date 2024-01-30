@@ -49,24 +49,24 @@ class CreateChatRoomAction extends LoadingAction {
 
     if (recipientId == null || uid == null) return state;
 
-    final uid1 = uid + recipientId!;
-    final uid2 = recipientId! + uid;
+    final ids = [uid, recipientId];
+    ids.sort();
+    final roomId = ids.join();
 
     // Checks if a chatroom between users already exists. if any, will not create a chatroom
-    if (state.chatPageState.chatRooms.any((element) => element.roomId == uid1 || element.roomId == uid2)) return state;
+    if (state.chatPageState.chatRooms.any((element) => element.roomId == roomId)) return state;
 
-    final newChatRoomId = await ChatService().createChatRoom(
+    final newChatRoom = await ChatService().createChatRoom(
       uid: uid,
       recipientId: recipientId,
     );
 
-    if (newChatRoomId == null) return state;
+    if (newChatRoom == null) return state;
 
-    return state.copyWith(
-        chatPageState: state.chatPageState.copyWith(chatRooms: [
+    return state.copyWith.chatPageState(chatRooms: [
       ...state.chatPageState.chatRooms,
-      ...[newChatRoomId],
-    ]));
+      ...[newChatRoom],
+    ]);
   }
 }
 
@@ -101,10 +101,7 @@ class ChatMessageAction extends LoadingAction {
   }
 
   @override
-  void after() {
-    dispatch(DisposeChatDraftAction());
-    super.after();
-  }
+  void after() => dispatch(DisposeChatDraftAction());
 }
 
 /// Selects a chatroom and stores the selected chat room's Id in state
@@ -120,6 +117,7 @@ class SelectChatRoomAction extends ReduxAction<AppState> {
 
     final chatMessages = await ChatService().getChatMessages(chatRoomId!);
 
+    // Non existing chat rooms will not have any messages, return without messages.
     if (chatRoom == null || chatMessages == null) return state.copyWith.chatPageState(selectedChatRoom: chatRoom);
 
     return state.copyWith.chatPageState(selectedChatRoom: chatRoom.copyWith(messages: chatMessages));
@@ -131,13 +129,7 @@ class DisposeSelectedChatRoomIdAction extends ReduxAction<AppState> {
   DisposeSelectedChatRoomIdAction();
 
   @override
-  AppState reduce() => state.copyWith.chatPageState(selectedChatRoom: null);
-
-  @override
-  void after() {
-    dispatch(DisposeChatDraftAction());
-    super.after();
-  }
+  AppState reduce() => state.copyWith.chatPageState(selectedChatRoom: null, chatDraft: null);
 }
 
 /// Clears selected Chat Draft from state
@@ -155,7 +147,5 @@ class SetChatMessageDraftAction extends ReduxAction<AppState> {
   final String? message;
 
   @override
-  AppState reduce() {
-    return state.copyWith.chatPageState(chatDraft: message);
-  }
+  AppState reduce() => state.copyWith.chatPageState(chatDraft: message);
 }

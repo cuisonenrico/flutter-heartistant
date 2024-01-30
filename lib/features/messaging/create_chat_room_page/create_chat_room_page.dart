@@ -17,6 +17,7 @@ class CreateChatRoomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: UI and functionality improvements
     return AppScaffold(
       body: Column(
         children: [

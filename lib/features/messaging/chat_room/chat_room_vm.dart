@@ -23,7 +23,9 @@ class ChatRoomVmFactory extends VmFactory<AppState, ChatRoomConnector, ChatRoomV
       );
 
   ChatRoomDto? get _chatRoom => state.chatPageState.selectedChatRoom;
+
   UserDto get _sender => state.userState.user;
+
   UserDto? get _recipient => state.chatPageState.userList.firstOrNullWhere((user) => user.uid == _recipientId);
 
   String? get _recipientId => _sender.uid == _chatRoom?.recipientId
@@ -31,6 +33,7 @@ class ChatRoomVmFactory extends VmFactory<AppState, ChatRoomConnector, ChatRoomV
       : _chatRoom?.roomId?.replaceAll(_chatRoom!.roomCreatorId!, '');
 
   Future<void> _onChatMessage() async => dispatch(ChatMessageAction());
+
   Future<void> _onChatChanged(String? message) async => dispatch(SetChatMessageDraftAction(message));
 }
 

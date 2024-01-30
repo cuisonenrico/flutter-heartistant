@@ -13,6 +13,7 @@ class FriendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: UI and Functionality Improvement
     return GestureDetector(
       onTap: callback,
       child: Row(

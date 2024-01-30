@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/widgets/message_pill.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
@@ -45,20 +44,20 @@ class ChatRoom extends StatelessWidget {
               reverse: true,
               child: Column(
                 children: [
-                  ...?chatRoom?.messages.mapIndexed(
-                    (index, e) => Row(
+                  ...?chatRoom?.messages.map(
+                    (room) => Row(
                       children: [
-                        e.senderId == sender.uid
+                        room.senderId == sender.uid
                             ? MessagePill(
                                 showAvatar: false,
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                message: e.message,
+                                message: room.message,
                                 isSender: true,
                               )
                             : MessagePill(
                                 showAvatar: false,
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                message: e.message,
+                                message: room.message,
                                 color: Colors.grey,
                               ),
                       ],

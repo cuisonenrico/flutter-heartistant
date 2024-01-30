@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/chat_room_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/widgets/chat_room_box.dart';
@@ -37,7 +38,7 @@ class ChatPage extends StatelessWidget {
           radius: 30,
           child: Icon(
             Icons.add,
-            size: 30.0,
+            size: defaultIconSize,
           ),
         ),
       ),
@@ -58,9 +59,9 @@ class ChatPage extends StatelessWidget {
                     (room) => ChatRoomBox(
                       callback: () => context.pushNamed(ChatRoomConnector.routeName, extra: room.roomId),
                       displayName: users
-                              .firstWhere(
+                              .firstOrNullWhere(
                                   (element) => element.uid == room.recipientId || element.uid == room.roomCreatorId)
-                              .displayName ??
+                              ?.displayName ??
                           emptyString,
                     ),
                   ),
