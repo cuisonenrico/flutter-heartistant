@@ -8,6 +8,7 @@ import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
 class CreateChatRoomVmFactory extends VmFactory<AppState, CreateChatRoomConnector, CreateChatRoomPageVm> {
   @override
   fromStore() => CreateChatRoomPageVm(
+        chatRoomExistsEvt: state.chatRoomExistsEvt,
         onCreateChatRoom: _onCreateChatRoom,
         users: _users,
       );
@@ -22,8 +23,15 @@ class CreateChatRoomPageVm extends Vm {
   CreateChatRoomPageVm({
     required this.onCreateChatRoom,
     required this.users,
-  }) : super(equals: [users]);
+    required this.chatRoomExistsEvt,
+  }) : super(equals: [
+          users,
+          chatRoomExistsEvt,
+        ]);
 
   final List<UserDto> users;
   final ValueChanged<String?> onCreateChatRoom;
+
+  //Events
+  final Event<String>? chatRoomExistsEvt;
 }

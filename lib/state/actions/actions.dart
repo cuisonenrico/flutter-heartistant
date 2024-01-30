@@ -10,3 +10,11 @@ abstract class LoadingAction extends ReduxAction<AppState> {
   @override
   void after() => dispatch(WaitAction.remove(actionKey));
 }
+
+class ChatRoomExistsAction extends ReduxAction<AppState> {
+  ChatRoomExistsAction(this.isExisting);
+
+  final String isExisting;
+  @override
+  AppState reduce() => state.copyWith(chatRoomExistsEvt: Event(isExisting));
+}

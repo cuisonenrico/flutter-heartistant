@@ -54,7 +54,11 @@ class CreateChatRoomAction extends LoadingAction {
     final roomId = ids.join();
 
     // Checks if a chatroom between users already exists. if any, will not create a chatroom
-    if (state.chatPageState.chatRooms.any((element) => element.roomId == roomId)) return state;
+    if (state.chatPageState.chatRooms.any((element) => element.roomId == roomId)) {
+      // redirects to the chat room instead; ends the action;
+      dispatch(ChatRoomExistsAction(roomId));
+      return state;
+    }
 
     final newChatRoom = await ChatService().createChatRoom(
       uid: uid,
