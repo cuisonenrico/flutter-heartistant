@@ -2,23 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/utilities/colors.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
+import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
     required this.onChangeText,
     this.hintText,
     this.errorText,
+    this.initialValue,
     this.obscureText = false,
     this.icon,
     this.padding,
+    this.keyboardInput,
+    this.maxLines,
     super.key,
   });
 
   final String? hintText;
   final String? errorText;
+  final String? initialValue;
   final bool obscureText;
   final IconData? icon;
   final EdgeInsets? padding;
+  final TextInputType? keyboardInput;
+  final int? maxLines;
 
   final ValueChanged<String> onChangeText;
 
@@ -26,7 +33,10 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding ?? EdgeInsets.zero,
-      child: TextField(
+      child: TextFormField(
+        keyboardType: keyboardInput ?? TextInputType.multiline,
+        maxLines: maxLines ?? defaultIntOne,
+        initialValue: initialValue ?? emptyString,
         obscureText: obscureText,
         decoration: InputDecoration(
           errorText: errorText,
