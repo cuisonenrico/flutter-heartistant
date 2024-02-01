@@ -12,21 +12,25 @@ class UsersHandler implements FirestoreUsers {
   CollectionReference<Map<String, dynamic>> db = FirebaseFirestore.instance.collection(USER_COLLECTION);
 
   @override
-  Future<UserDto?> userLogin(User user) async {
+  Future<UserDto?> userLogin(User? user, {String? displayName}) async {
+    if (user == null) return null;
     // Queries db if id exists
     final isUserExist = await db.doc(user.uid).get().then((value) => value.exists);
 
-    if (!isUserExist) {
-      final newUser = <String, dynamic>{
-        "uid": user.uid,
-        "email": user.email,
-      };
+    final newUser = <String, dynamic>{
+      "uid": user.uid,
+      "email": user.email,
+      "displayName": displayName ?? user.displayName,
+    };
 
+    if (!isUserExist) {
       // Creates entity when user does not exist in database
       await db.doc(user.uid).set(newUser);
+
+      await user.updateDisplayName(displayName);
     }
 
-    return UserDto.fromFirestoreUser(user);
+    return UserDto.fromJson(newUser);
   }
 
   @override
@@ -43,8 +47,15 @@ class UsersHandler implements FirestoreUsers {
       idToken: googleAuth?.idToken,
     );
 
+    final userCred = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // TODO: Test signing up with socials
+    await userLogin(
+      userCred.user,
+      displayName: userCred.user?.displayName,
+    );
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return userCred;
   }
 
   @override
@@ -58,7 +69,14 @@ class UsersHandler implements FirestoreUsers {
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(token);
 
+    final userCred = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+
+    // TODO: Test signing up with socials
+    await userLogin(
+      userCred.user,
+      displayName: userCred.user?.displayName,
+    );
     // Once signed in, return the UserCredential
-    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    return userCred;
   }
 }

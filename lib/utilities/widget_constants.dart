@@ -1,5 +1,6 @@
 // Spacing
 import 'package:flutter/material.dart';
+import 'package:flutter_heartistant/utilities/decorations.dart';
 
 const defaultSpacing = 32.0;
 const defaultDoubledSpacing = 64.0;
@@ -28,3 +29,15 @@ const zoomButtonBorderRadius = 12.0;
 const zoomButtonHorizontalPadding = 11.0;
 const mapButtonSize = 36.0;
 const mapButtonBorderRadius = 12.0;
+
+final defaultBoxDecorationWithShadow = BoxDecoration(
+  color: Colors.white,
+  borderRadius: defaultBorderRadius,
+  boxShadow: [defaultShadow],
+);
+
+// Icon Size
+const defaultIconSize = 30.0;
+
+//
+const defaultIntOne = 1;

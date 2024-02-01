@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
 import 'package:flutter_heartistant/features/widgets/app_bar_label.dart';
 import 'package:flutter_heartistant/features/widgets/app_icon_button.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
@@ -13,6 +14,7 @@ class MyAppBar extends StatelessWidget {
     this.onPressBack,
     this.secondaryActionIcon = Icons.menu,
     this.isSecondaryIconVisible = true,
+    this.isMessagingIconVisible = true,
     this.isBackButtonVisible = true,
     this.labelTextStyle,
     this.subLabel,
@@ -27,6 +29,7 @@ class MyAppBar extends StatelessWidget {
 
   final bool isCornersRounded;
   final bool isSecondaryIconVisible;
+  final bool isMessagingIconVisible;
   final bool isBackButtonVisible;
   final String label;
   final IconData secondaryActionIcon;
@@ -73,6 +76,13 @@ class MyAppBar extends StatelessWidget {
                 labelTextStyle: labelTextStyle,
               ),
             ),
+            if (isMessagingIconVisible)
+              AppIconButton(
+                onPressed: () {
+                  context.pushNamed(ChatPageConnector.routeName);
+                },
+                icon: const Icon(Icons.message),
+              ),
             if (isSecondaryIconVisible)
               AppIconButton(
                 onPressed: onSecondaryActionPressed,
