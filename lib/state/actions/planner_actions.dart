@@ -29,6 +29,12 @@ class SelectMonthAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() => state.copyWith.plannerPageState(selectedMonth: selectedMonth.abs() % 12);
+
+  @override
+  void after() {
+    dispatch(GetTasksAction());
+    super.after();
+  }
 }
 
 /// Sets the [selectedMonth] in State
