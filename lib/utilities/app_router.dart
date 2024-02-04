@@ -73,7 +73,7 @@ final router = GoRouter(
                 child: const CreateChatRoomConnector(),
               ),
               routes: const [],
-            )
+            ),
           ],
         )
       ],

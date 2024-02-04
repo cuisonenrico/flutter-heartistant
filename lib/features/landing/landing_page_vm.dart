@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/landing/landing_page_connector.dart';
 import 'package:flutter_heartistant/state/actions/actions.dart';
 import 'package:flutter_heartistant/state/actions/main_page_action.dart';
+import 'package:flutter_heartistant/state/actions/planner_actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
 
@@ -11,6 +12,7 @@ class LandingPageVmFactory extends VmFactory<AppState, LandingPageConnector, Lan
   fromStore() => LandingPageVm(
         onTriggerActionButton: _onTriggerActionButton,
         onChangePageViewIndex: _onChangePageViewIndex,
+        onCreateTask: _onCreateTask,
         pageViewIndex: _pageViewIndex,
         pageViewActionButtonEvt: state.pageViewActionButtonEvent,
       );
@@ -20,12 +22,15 @@ class LandingPageVmFactory extends VmFactory<AppState, LandingPageConnector, Lan
   void _onChangePageViewIndex(int index) => dispatch(SetPageViewIndexAction(index));
 
   void _onTriggerActionButton() => dispatch(SetPageActionButtonEventAction());
+
+  void _onCreateTask() => dispatch(SetCreateTaskAction());
 }
 
 class LandingPageVm extends Vm {
   LandingPageVm({
     required this.onTriggerActionButton,
     required this.onChangePageViewIndex,
+    required this.onCreateTask,
     required this.pageViewActionButtonEvt,
     required this.pageViewIndex,
   }) : super(equals: [
@@ -34,6 +39,7 @@ class LandingPageVm extends Vm {
         ]);
 
   final VoidCallback onTriggerActionButton;
+  final VoidCallback onCreateTask;
   final ValueChanged<int> onChangePageViewIndex;
 
   final int pageViewIndex;

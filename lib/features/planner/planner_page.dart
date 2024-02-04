@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_heartistant/features/planner/create_plan_page/create_plan_page_connector.dart';
 import 'package:flutter_heartistant/features/planner/widgets/day_picker.dart';
 import 'package:flutter_heartistant/features/planner/widgets/month_picker.dart';
 import 'package:flutter_heartistant/features/styles/spacers.dart';
@@ -16,17 +17,23 @@ class PlannerPage extends StatefulWidget {
   const PlannerPage({
     required this.onSelectDay,
     required this.onSelectMonth,
+    required this.onSelectYear,
     required this.selectedDay,
     required this.selectedMonth,
+    required this.selectedYear,
     required this.tasks,
+    this.isCreatingTask = true,
     super.key,
   });
 
   final ValueChanged<int> onSelectDay;
   final ValueChanged<int> onSelectMonth;
+  final ValueChanged<int> onSelectYear;
 
   final int selectedDay;
   final int selectedMonth;
+  final int selectedYear;
+  final bool isCreatingTask;
 
   final List<TaskDto>? tasks;
 
@@ -68,7 +75,9 @@ class _PlannerPageState extends State<PlannerPage> {
               children: [
                 MonthPicker(
                   selectedMonth: widget.selectedMonth,
+                  selectedYear: widget.selectedYear,
                   onSelectMonth: widget.onSelectMonth,
+                  onSelectYear: widget.onSelectYear,
                 ),
                 DayPicker(
                   color: pageThemeColor.getElementColor,
@@ -77,7 +86,7 @@ class _PlannerPageState extends State<PlannerPage> {
                   selectedMonth: widget.selectedMonth,
                   onSelectDay: widget.onSelectDay,
                 ),
-                const VerticalSpace(64),
+                const VerticalSpace(90.0),
               ],
             ),
           ),
@@ -125,7 +134,7 @@ class _PlannerPageState extends State<PlannerPage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                           horizontal: defaultHalfPadding,
-                          vertical: defaultPadding,
+                          vertical: defaultHalfPadding,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,15 +146,17 @@ class _PlannerPageState extends State<PlannerPage> {
                                   task.title ?? emptyString,
                                   style: TextStyles.label1,
                                 ),
-                                const Icon(
-                                  Icons.check_box_outline_blank,
-                                  size: 25,
+                                Text(
+                                  task.time ?? emptyString,
+                                  style: TextStyles.label1,
                                 ),
                               ],
                             ),
                             const VerticalSpace(defaultQuarterSpacing),
                             Text(
                               task.note ?? emptyString,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyles.body2,
                             ),
                           ],
@@ -156,7 +167,19 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
             ),
           ),
-        )
+        ),
+        if (widget.isCreatingTask)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: AnimatedContainer(
+              curve: Curves.fastEaseInToSlowEaseOut,
+              duration: const Duration(seconds: 5),
+              child: const CreatePlanPageConnector(),
+            ),
+          ),
       ],
     );
   }

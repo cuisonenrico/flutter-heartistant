@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter_heartistant/state/chat_page_state/chat_page_state.dart';
+import 'package:flutter_heartistant/state/forms/create_task_state.dart';
 import 'package:flutter_heartistant/state/forms/login_form_state.dart';
 import 'package:flutter_heartistant/state/forms/sign_up_form_state.dart';
 import 'package:flutter_heartistant/state/main_page_state/main_page_state.dart';
@@ -18,6 +19,7 @@ class AppState with _$AppState {
     // Sub-states
     @Default(LoginFormState()) LoginFormState loginFormState,
     @Default(SignUpFormState()) SignUpFormState signUpFormState,
+    @Default(CreateTaskState()) CreateTaskState createTaskState,
     @Default(UserState()) UserState userState,
     @Default(MainPageState()) MainPageState mainPageState,
     @Default(ChatPageState()) ChatPageState chatPageState,
