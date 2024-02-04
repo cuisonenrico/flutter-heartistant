@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/utilities/colors.dart';
 import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
+import 'package:flutter_heartistant/utilities/extensions/theme_extensions.dart';
 
 const double _iconSize = 25;
 
 class LandingPageNavigationBar extends StatelessWidget {
   const LandingPageNavigationBar({
+    required this.onTriggerActionButton,
     required this.onChangePageViewIndex,
     required this.pageViewIndex,
+    this.buttonColor,
     super.key,
   });
 
+  final VoidCallback onTriggerActionButton;
   final ValueChanged<int> onChangePageViewIndex;
 
   final int pageViewIndex;
+
+  final Color? buttonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +59,11 @@ class LandingPageNavigationBar extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => onChangePageViewIndex(PageViewList.TWO.index),
+                    onTap: () => onChangePageViewIndex(PageViewList.PLANNER.index),
                     child: Icon(
-                      Icons.looks_two,
-                      size: _iconSize * (pageViewIndex == PageViewList.TWO.index ? 1.2 : 1.0),
-                      color: pageViewIndex == PageViewList.TWO.index ? Colors.blueAccent : mediumGrey,
+                      Icons.calendar_month_rounded,
+                      size: _iconSize * (pageViewIndex == PageViewList.PLANNER.index ? 1.2 : 1.0),
+                      color: pageViewIndex == PageViewList.PLANNER.index ? PageViewList.PLANNER.color : mediumGrey,
                     ),
                   ),
                   const SizedBox(),
@@ -89,18 +95,18 @@ class LandingPageNavigationBar extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 20),
               child: Center(
                 child: GestureDetector(
-                  onTap: () {
-                    // Handle the center item tap
-                  },
-                  child: Container(
+                  onTap: () => onTriggerActionButton(),
+                  child: AnimatedContainer(
+                    duration: const Duration(seconds: 1),
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
-                            Color(0xFF2633C5),
-                            Color(0xFF6A88E5),
+                            const Color(0xFF2633C5),
+                            buttonColor ?? const Color(0xFF6A88E5),
+                            const Color(0xFF6A88E5),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -112,9 +118,9 @@ class LandingPageNavigationBar extends StatelessWidget {
                             blurRadius: 16.0,
                           ),
                         ]),
-                    child: const Icon(
+                    child: Icon(
                       Icons.add,
-                      color: Colors.white,
+                      color: PageViewList.values[pageViewIndex].color.getElementColor,
                     ),
                   ),
                 ),

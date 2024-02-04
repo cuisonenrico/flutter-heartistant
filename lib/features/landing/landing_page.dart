@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/one/one.dart';
+import 'package:flutter_heartistant/features/planner/planner_page_connector.dart';
 import 'package:flutter_heartistant/features/profile/profile_connector.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/features/three/three.dart';
-import 'package:flutter_heartistant/features/two/two.dart';
 import 'package:flutter_heartistant/features/widgets/app_bar.dart';
 import 'package:flutter_heartistant/features/widgets/app_scaffold.dart';
 import 'package:flutter_heartistant/features/widgets/landing_page_navigation_bar.dart';
@@ -11,11 +11,13 @@ import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({
+    required this.onTriggerActionButton,
     required this.onChangePageViewIndex,
     required this.pageViewIndex,
     super.key,
   });
 
+  final VoidCallback onTriggerActionButton;
   final ValueChanged<int> onChangePageViewIndex;
 
   final int pageViewIndex;
@@ -24,9 +26,11 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
         appBar: MyAppBar(
+          isCornersRounded: false,
           isBackButtonVisible: false,
           onSecondaryActionPressed: () {},
           label: PageViewList.values[pageViewIndex].title,
+          color: PageViewList.values[pageViewIndex].color,
           labelTextStyle: TextStyles.headline2.copyWith(color: Colors.black),
           isSecondaryIconVisible: true,
           secondaryActionIcon: Icons.notifications,
@@ -42,7 +46,7 @@ class LandingPage extends StatelessWidget {
               child: PageView(
                 children: [
                   if (pageViewIndex == 0) const One(),
-                  if (pageViewIndex == 1) const Two(),
+                  if (pageViewIndex == 1) const PlannerPageConnector(),
                   if (pageViewIndex == 2) const Three(),
                   if (pageViewIndex == 3) const ProfileConnector(),
                 ],
@@ -53,8 +57,10 @@ class LandingPage extends StatelessWidget {
               left: 0,
               right: 0,
               child: LandingPageNavigationBar(
+                onTriggerActionButton: onTriggerActionButton,
                 pageViewIndex: pageViewIndex,
                 onChangePageViewIndex: onChangePageViewIndex,
+                buttonColor: PageViewList.values[pageViewIndex].color,
               ),
             ),
           ],
