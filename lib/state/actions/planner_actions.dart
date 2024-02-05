@@ -7,7 +7,6 @@ import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
 import 'package:flutter_heartistant/utilities/extensions/time_format_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
-import 'package:intl/intl.dart';
 
 /// Sets the [selectedDay] in State
 class SelectDayAction extends ReduxAction<AppState> {
@@ -193,7 +192,7 @@ class OnChangeDateAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() {
-    final datePicked = DateFormat('yyyy-MM-dd').format(pickedDate);
+    final datePicked = pickedDate.toDateFormatted;
     return state.copyWith.createTaskState(date: datePicked);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_heartistant/features/planner/create_plan_page/create_plan_page_connector.dart';
 import 'package:flutter_heartistant/features/planner/widgets/day_picker.dart';
 import 'package:flutter_heartistant/features/planner/widgets/month_picker.dart';
@@ -71,23 +72,26 @@ class _PlannerPageState extends State<PlannerPage> {
           right: 0,
           child: Container(
             color: PageViewList.PLANNER.color,
-            child: Column(
-              children: [
-                MonthPicker(
-                  selectedMonth: widget.selectedMonth,
-                  selectedYear: widget.selectedYear,
-                  onSelectMonth: widget.onSelectMonth,
-                  onSelectYear: widget.onSelectYear,
-                ),
-                DayPicker(
-                  color: pageThemeColor.getElementColor,
-                  // TODO: handle in state
-                  selectedDay: widget.selectedDay,
-                  selectedMonth: widget.selectedMonth,
-                  onSelectDay: widget.onSelectDay,
-                ),
-                const VerticalSpace(90.0),
-              ],
+            child: Animate(
+              effects: const [SlideEffect(duration: Duration(milliseconds: 300))],
+              child: Column(
+                children: [
+                  MonthPicker(
+                    selectedMonth: widget.selectedMonth,
+                    selectedYear: widget.selectedYear,
+                    onSelectMonth: widget.onSelectMonth,
+                    onSelectYear: widget.onSelectYear,
+                  ),
+                  DayPicker(
+                    color: pageThemeColor.getElementColor,
+                    // TODO: handle in state
+                    selectedDay: widget.selectedDay,
+                    selectedMonth: widget.selectedMonth,
+                    onSelectDay: widget.onSelectDay,
+                  ),
+                  const VerticalSpace(90.0),
+                ],
+              ),
             ),
           ),
         ),
@@ -110,74 +114,88 @@ class _PlannerPageState extends State<PlannerPage> {
                 ),
               ],
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const VerticalSpace(defaultSpacing),
-                  if (widget.tasks != null)
-                    ...widget.tasks!.map(
-                      (task) => FloatingContainer(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [defaultShadow],
-                          border: Border(
-                            left: BorderSide(
-                              width: 8.0,
-                              color: TaskProgress.values[task.progress ?? 0].color,
+            child: Animate(
+              effects: const [
+                SlideEffect(
+                  duration: Duration(milliseconds: 300),
+                  end: Offset(0, 0),
+                  begin: Offset(0, 1),
+                )
+              ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const VerticalSpace(defaultSpacing),
+                    if (widget.tasks != null)
+                      ...widget.tasks!.map(
+                        (task) => FloatingContainer(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [defaultShadow],
+                            border: Border(
+                              left: BorderSide(
+                                width: 8.0,
+                                color: TaskProgress.values[task.progress ?? 0].color,
+                              ),
                             ),
                           ),
-                        ),
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: defaultPadding,
-                          vertical: defaultQuarterPadding,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: defaultHalfPadding,
-                          vertical: defaultHalfPadding,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  task.title ?? emptyString,
-                                  style: TextStyles.label1,
-                                ),
-                                Text(
-                                  task.time ?? emptyString,
-                                  style: TextStyles.label1,
-                                ),
-                              ],
-                            ),
-                            const VerticalSpace(defaultQuarterSpacing),
-                            Text(
-                              task.note ?? emptyString,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyles.body2,
-                            ),
-                          ],
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: defaultPadding,
+                            vertical: defaultQuarterPadding,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: defaultHalfPadding,
+                            vertical: defaultHalfPadding,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    task.title ?? emptyString,
+                                    style: TextStyles.label1,
+                                  ),
+                                  Text(
+                                    task.time ?? emptyString,
+                                    style: TextStyles.label1,
+                                  ),
+                                ],
+                              ),
+                              const VerticalSpace(defaultQuarterSpacing),
+                              Text(
+                                task.note ?? emptyString,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyles.body2,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
         if (widget.isCreatingTask)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: AnimatedContainer(
-              curve: Curves.fastEaseInToSlowEaseOut,
-              duration: const Duration(seconds: 5),
-              child: const CreatePlanPageConnector(),
+          Animate(
+            effects: const [
+              SlideEffect(
+                duration: Duration(milliseconds: 400),
+                end: Offset(0, 0),
+                begin: Offset(0, 1),
+              )
+            ],
+            child: const Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: CreatePlanPageConnector(),
             ),
           ),
       ],

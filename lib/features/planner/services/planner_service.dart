@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/day_plan_dto.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
+import 'package:flutter_heartistant/utilities/extensions/time_format_ext.dart';
 import 'package:flutter_heartistant/utilities/handlers/db_constants.dart';
-import 'package:intl/intl.dart';
 
 class PlannerService extends ChangeNotifier {
   CollectionReference<Map<String, dynamic>> dayPlanDb = FirebaseFirestore.instance.collection(DAY_PLAN_COLLECTION);
 
   Future<List<TaskDto>?> getTasks(String uid, DateTime selectedDate) async {
-    final dateCreatedFormatted = DateFormat('yyyy-MM-dd').format(selectedDate);
+    final dateCreatedFormatted = selectedDate.toDateFormatted;
     final primaryKey = '${uid}_$dateCreatedFormatted';
 
     final exists = await dayPlanDb.doc(primaryKey).get().then((value) => value.exists);
@@ -26,7 +26,7 @@ class PlannerService extends ChangeNotifier {
   }
 
   Future<void> createTask(String uid, DateTime dateCreated, TaskDto task) async {
-    final dateCreatedFormatted = DateFormat('yyyy-MM-dd').format(dateCreated);
+    final dateCreatedFormatted = dateCreated.toDateFormatted;
     final primaryKey = '${uid}_$dateCreatedFormatted';
 
     final exists = await dayPlanDb.doc(primaryKey).get().then((value) => value.exists);
