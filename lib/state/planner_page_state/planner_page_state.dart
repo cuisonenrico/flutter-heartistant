@@ -9,6 +9,7 @@ class PlannerPageState with _$PlannerPageState {
   const factory PlannerPageState({
     @Default(0) int selectedDay,
     @Default(0) int selectedMonth,
+    @Default(0) int selectedYear,
     @JsonKey(includeFromJson: false) @Default(<TaskDto>[]) List<TaskDto>? tasks,
   }) = _PlannerPageState;
 
@@ -17,6 +18,7 @@ class PlannerPageState with _$PlannerPageState {
   factory PlannerPageState.init() => PlannerPageState(
         selectedDay: DateTime.now().day,
         selectedMonth: DateTime.now().month,
+        selectedYear: DateTime.now().year,
         tasks: List.empty(),
       );
 }

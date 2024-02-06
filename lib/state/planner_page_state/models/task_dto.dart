@@ -8,6 +8,7 @@ class TaskDto with _$TaskDto {
   const factory TaskDto({
     String? note,
     String? title,
+    String? time,
     int? progress,
   }) = _TaskDto;
 

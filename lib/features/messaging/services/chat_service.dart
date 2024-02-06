@@ -6,6 +6,8 @@ import 'package:flutter_heartistant/state/user_state/user_dto/user_dto.dart';
 import 'package:flutter_heartistant/utilities/handlers/db_constants.dart';
 
 class ChatService extends ChangeNotifier {
+  ChatService();
+
   final _fireStore = FirebaseFirestore.instance;
 
   CollectionReference<Map<String, dynamic>> chatRoomDb = FirebaseFirestore.instance.collection(CHAT_ROOM_COLLECTION);

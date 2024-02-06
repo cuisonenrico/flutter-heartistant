@@ -6,6 +6,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/authentication_app.dart';
+import 'package:flutter_heartistant/features/messaging/services/chat_service.dart';
+import 'package:flutter_heartistant/features/planner/services/planner_service.dart';
 import 'package:flutter_heartistant/firebase_options.dart';
 import 'package:flutter_heartistant/state/actions/user_actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
@@ -26,6 +28,9 @@ Future<void> startApp() async {
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
       final currUser = FirebaseAuth.instance.currentUser;
+
+      getIt.registerLazySingleton<ChatService>(() => ChatService());
+      getIt.registerLazySingleton<PlannerService>(() => PlannerService());
 
       if (currUser != null) await store.dispatch(UserLoginAction(currUser));
 
