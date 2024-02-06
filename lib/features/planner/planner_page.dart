@@ -3,15 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_heartistant/features/planner/create_plan_page/create_plan_page_connector.dart';
 import 'package:flutter_heartistant/features/planner/widgets/day_picker.dart';
 import 'package:flutter_heartistant/features/planner/widgets/month_picker.dart';
+import 'package:flutter_heartistant/features/planner/widgets/task_list.dart';
 import 'package:flutter_heartistant/features/styles/spacers.dart';
-import 'package:flutter_heartistant/features/styles/styles.dart';
-import 'package:flutter_heartistant/features/widgets/floating_container.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
-import 'package:flutter_heartistant/utilities/decorations.dart';
 import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
-import 'package:flutter_heartistant/utilities/enums/planner_page_enums.dart';
 import 'package:flutter_heartistant/utilities/extensions/theme_extensions.dart';
-import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
 class PlannerPage extends StatefulWidget {
@@ -19,6 +15,7 @@ class PlannerPage extends StatefulWidget {
     required this.onSelectDay,
     required this.onSelectMonth,
     required this.onSelectYear,
+    required this.onSelectTask,
     required this.selectedDay,
     required this.selectedMonth,
     required this.selectedYear,
@@ -30,6 +27,7 @@ class PlannerPage extends StatefulWidget {
   final ValueChanged<int> onSelectDay;
   final ValueChanged<int> onSelectMonth;
   final ValueChanged<int> onSelectYear;
+  final ValueChanged<int> onSelectTask;
 
   final int selectedDay;
   final int selectedMonth;
@@ -101,84 +99,9 @@ class _PlannerPageState extends State<PlannerPage> {
           left: 0,
           right: 0,
           bottom: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(defaultRadius)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 2,
-                  offset: const Offset(6, 0),
-                ),
-              ],
-            ),
-            child: Animate(
-              effects: const [
-                SlideEffect(
-                  duration: Duration(milliseconds: 300),
-                  end: Offset(0, 0),
-                  begin: Offset(0, 1),
-                )
-              ],
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const VerticalSpace(defaultSpacing),
-                    if (widget.tasks != null)
-                      ...widget.tasks!.map(
-                        (task) => FloatingContainer(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [defaultShadow],
-                            border: Border(
-                              left: BorderSide(
-                                width: 8.0,
-                                color: TaskProgress.values[task.progress ?? 0].color,
-                              ),
-                            ),
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: defaultPadding,
-                            vertical: defaultQuarterPadding,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: defaultHalfPadding,
-                            vertical: defaultHalfPadding,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    task.title ?? emptyString,
-                                    style: TextStyles.label1,
-                                  ),
-                                  Text(
-                                    task.time ?? emptyString,
-                                    style: TextStyles.label1,
-                                  ),
-                                ],
-                              ),
-                              const VerticalSpace(defaultQuarterSpacing),
-                              Text(
-                                task.note ?? emptyString,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyles.body2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
+          child: TaskList(
+            tasks: widget.tasks ?? [],
+            onSelectTask: widget.onSelectTask,
           ),
         ),
         if (widget.isCreatingTask)

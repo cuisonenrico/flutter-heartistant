@@ -6,8 +6,8 @@ import 'package:flutter_heartistant/state/actions/actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
 import 'package:flutter_heartistant/utilities/app_starter.dart';
+import 'package:flutter_heartistant/utilities/enums/planner_page_enums.dart';
 import 'package:flutter_heartistant/utilities/extensions/time_format_ext.dart';
-import 'package:flutter_heartistant/utilities/string_constants.dart';
 
 /// Sets the [selectedDay] in State
 class SelectDayAction extends ReduxAction<AppState> {
@@ -103,13 +103,20 @@ class CreateTasksAction extends LoadingAction {
     final uid = state.userState.user.uid;
     if (uid == null) return state;
 
+    final createTaskState = state.createTaskState;
+
+    final time = createTaskState.startTime == createTaskState.endTime
+        ? createTaskState.startTime
+        : '${createTaskState.startTime} - ${createTaskState.endTime}';
+
     final task = TaskDto(
-      title: state.createTaskState.title,
-      note: state.createTaskState.notes,
-      time: state.createTaskState.time ?? emptyString,
+      title: createTaskState.title,
+      note: createTaskState.notes,
+      time: time,
       progress: 0,
     );
-    final date = state.createTaskState.date == null ? DateTime.now() : DateTime.parse(state.createTaskState.date!);
+
+    final date = createTaskState.date == null ? DateTime.now() : DateTime.parse(createTaskState.date!);
 
     await getIt<PlannerService>().createTask(uid, date, task);
 
@@ -166,12 +173,8 @@ class InitializeCreateTaskFormAction extends ReduxAction<AppState> {
     final selectedMonth = plannerPageState.selectedMonth;
     final selectedYear = plannerPageState.selectedYear;
     final initialDate = DateTime(selectedYear, selectedMonth, selectedDay).toDateFormatted;
-    final timeNow = DateTime.now().toTimeFormatted;
 
-    return state.copyWith.createTaskState(
-      date: initialDate,
-      time: timeNow,
-    );
+    return state.copyWith.createTaskState(date: initialDate, startTime: null, endTime: null);
   }
 }
 
@@ -180,7 +183,8 @@ class DisposeCreateTaskFormAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() => state.copyWith.createTaskState(
-        time: null,
+        startTime: null,
+        endTime: null,
         date: null,
         title: null,
         notes: null,
@@ -202,14 +206,22 @@ class OnChangeDateAction extends ReduxAction<AppState> {
 
 ///
 class OnChangeTimeAction extends ReduxAction<AppState> {
-  OnChangeTimeAction(this.pickedTime);
+  OnChangeTimeAction({
+    required this.type,
+    required this.pickedTime,
+  });
 
+  final TimeRange type;
   final DateTime pickedTime;
 
   @override
   AppState reduce() {
     final timePicked = pickedTime.toTimeFormatted;
-    return state.copyWith.createTaskState(time: timePicked);
+
+    if (type == TimeRange.START_TIME) {
+      return state.copyWith.createTaskState(startTime: timePicked);
+    }
+    return state.copyWith.createTaskState(endTime: timePicked);
   }
 }
 
@@ -231,4 +243,20 @@ class OnChangeNotesAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() => state.copyWith.createTaskState(notes: notes);
+}
+
+///
+class SelectTaskAction extends ReduxAction<AppState> {
+  SelectTaskAction(this.index);
+
+  final int index;
+
+  @override
+  AppState reduce() {
+    final tasks = state.plannerPageState.tasks;
+
+    if (tasks == null) return state;
+
+    return state.copyWith.plannerPageState(selectedTask: tasks[index]);
+  }
 }

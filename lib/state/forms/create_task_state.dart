@@ -7,7 +7,8 @@ part 'create_task_state.g.dart';
 class CreateTaskState with _$CreateTaskState {
   const factory CreateTaskState({
     String? date,
-    String? time,
+    String? startTime,
+    String? endTime,
     String? title,
     String? notes,
   }) = _CreateTaskState;

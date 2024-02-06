@@ -11,6 +11,7 @@ class PlannerPageState with _$PlannerPageState {
     @Default(0) int selectedMonth,
     @Default(0) int selectedYear,
     @JsonKey(includeFromJson: false) @Default(<TaskDto>[]) List<TaskDto>? tasks,
+    @JsonKey(includeFromJson: false) TaskDto? selectedTask,
   }) = _PlannerPageState;
 
   factory PlannerPageState.fromJson(Map<String, dynamic> json) => _$PlannerPageStateFromJson(json);
@@ -20,5 +21,6 @@ class PlannerPageState with _$PlannerPageState {
         selectedMonth: DateTime.now().month,
         selectedYear: DateTime.now().year,
         tasks: List.empty(),
+        selectedTask: null,
       );
 }

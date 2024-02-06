@@ -7,6 +7,7 @@ import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/chat_room_connector.dart';
 import 'package:flutter_heartistant/features/messaging/create_chat_room_page/create_chat_room_page_connector.dart';
+import 'package:flutter_heartistant/features/planner/task_view/task_view.dart';
 import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:go_router/go_router.dart';
@@ -74,6 +75,17 @@ final router = GoRouter(
               ),
               routes: const [],
             ),
+            GoRoute(
+              path: TaskView.route,
+              name: TaskView.routeName,
+              builder: (_, __) => const TaskView(),
+              pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+                context: context,
+                state: state,
+                child: const TaskView(),
+              ),
+              routes: const [],
+            ),
           ],
         )
       ],
@@ -114,10 +126,9 @@ CustomTransitionPage buildPageWithDefaultTransition<T>({
   required Widget child,
 }) =>
     CustomTransitionPage<T>(
-      transitionDuration: const Duration(milliseconds: 500),
       key: state.pageKey,
       child: child,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
+      transitionsBuilder: (_, animation, __, child) => SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(1, 0),
             end: Offset.zero,

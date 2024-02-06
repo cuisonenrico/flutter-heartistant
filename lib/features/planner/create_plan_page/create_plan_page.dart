@@ -5,8 +5,12 @@ import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/features/widgets/expansion_tile.dart';
 import 'package:flutter_heartistant/features/widgets/floating_container.dart';
 import 'package:flutter_heartistant/features/widgets/input_field.dart';
+import 'package:flutter_heartistant/gen/assets.gen.dart';
 import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
+import 'package:flutter_heartistant/utilities/enums/planner_page_enums.dart';
+import 'package:flutter_heartistant/utilities/extensions/string_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
+import 'package:flutter_heartistant/utilities/typedefs.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:intl/intl.dart';
 
@@ -28,7 +32,7 @@ class CreatePlanPage extends StatelessWidget {
   final VoidCallback onBackPressed;
   final VoidCallback onCreateTask;
   final ValueChanged<DateTime> onChangeDate;
-  final ValueChanged<DateTime> onChangeTime;
+  final OnChangeTime onChangeTime;
   final ValueChanged<String> onChangeTitle;
   final ValueChanged<String> onChangeNotes;
   final String? date;
@@ -66,8 +70,6 @@ class CreatePlanPage extends StatelessWidget {
               ],
             ),
           ),
-          // const Divider(thickness: 3.0),
-          // const VerticalSpace(defaultSpacing),
           Positioned(
             top: 50,
             left: 0,
@@ -80,7 +82,18 @@ class CreatePlanPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(defaultHalfPadding),
                     child: InputField(
-                      hintText: 'Title',
+                      inputDecoration: InputDecoration(
+                        hintText: 'What are you doing?',
+                        labelText: 'Title',
+                        focusColor: PageViewList.PLANNER.color,
+                        labelStyle: TextStyles.label3.copyWith(color: PageViewList.PLANNER.color),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: PageViewList.PLANNER.color), // Define underline color
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: PageViewList.PLANNER.color), // Define underline color
+                        ),
+                      ),
                       onChangeText: (title) => onChangeTitle(title),
                     ),
                   ),
@@ -88,11 +101,12 @@ class CreatePlanPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: defaultHalfPadding),
                     child: AppExpansionTile(
                       title: 'Date',
+                      titleStyle: TextStyles.label3.copyWith(color: PageViewList.PLANNER.color),
                       padding: EdgeInsets.zero,
                       onExpansionChanged: (_) {},
                       displayedText: DateFormat('yMMMMEEEEd').format(DateTime.parse(date!)).toString(),
                       displayedTextTextStyle: TextStyles.body1,
-                      // icon: Assets.svgImages.chevronDown.svg(),
+                      icon: Assets.svgImages.chevronDown.svg,
                       children: [
                         SizedBox(
                           height: _datePickerHeight,
@@ -117,23 +131,51 @@ class CreatePlanPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: defaultHalfPadding),
                     child: AppExpansionTile(
                       title: 'Time',
+                      titleStyle: TextStyles.label3.copyWith(color: PageViewList.PLANNER.color),
                       padding: EdgeInsets.zero,
                       onExpansionChanged: (_) {},
-                      displayedText: time ?? emptyString,
+                      displayedText: time ?? 'What Time?',
                       displayedTextTextStyle: TextStyles.body1,
-                      // icon: Assets.svgImages.chevronDown.svg(),
+                      icon: Assets.svgImages.chevronDown.svg,
                       children: [
                         SizedBox(
                           height: _datePickerHeight,
                           width: double.infinity,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: defaultQuarterPadding),
-                            child: CupertinoDatePicker(
-                              mode: CupertinoDatePickerMode.time,
-                              initialDateTime: DateTime.now(),
-                              // This is called when the user changes the dateTime.
-                              onDateTimeChanged: (time) => onChangeTime(time),
-                            ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: defaultQuarterPadding),
+                                  child: CupertinoDatePicker(
+                                    minuteInterval: 15,
+                                    mode: CupertinoDatePickerMode.time,
+                                    initialDateTime: DateTime.parse(date ?? emptyString),
+                                    // This is called when the user changes the dateTime.
+                                    onDateTimeChanged: (time) => onChangeTime(TimeRange.START_TIME, time),
+                                  ),
+                                ),
+                              ),
+                              const Expanded(
+                                flex: 1,
+                                child: Center(
+                                  child: Icon(Icons.arrow_right_alt),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: defaultQuarterPadding),
+                                  child: CupertinoDatePicker(
+                                    minuteInterval: 15,
+                                    mode: CupertinoDatePickerMode.time,
+                                    initialDateTime: DateTime.parse(date ?? emptyString),
+                                    // This is called when the user changes the dateTime.
+                                    onDateTimeChanged: (time) => onChangeTime(TimeRange.END_TIME, time),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -143,11 +185,23 @@ class CreatePlanPage extends StatelessWidget {
                     padding: const EdgeInsets.all(defaultHalfPadding),
                     child: InputField(
                       keyboardInput: TextInputType.multiline,
-                      maxLines: 4,
-                      hintText: 'Notes',
+                      maxLines: 2,
+                      inputDecoration: InputDecoration(
+                        hintText: 'Describe your task',
+                        labelText: 'Notes',
+                        focusColor: PageViewList.PLANNER.color,
+                        labelStyle: TextStyles.label3.copyWith(color: PageViewList.PLANNER.color),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: PageViewList.PLANNER.color), // Define underline color
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: PageViewList.PLANNER.color), // Define underline color
+                        ),
+                      ),
                       onChangeText: (notes) => onChangeNotes(notes),
                     ),
                   ),
+
                   GestureDetector(
                     onTap: () => onCreateTask(),
                     child: FloatingContainer(
@@ -155,10 +209,13 @@ class CreatePlanPage extends StatelessWidget {
                       decoration: defaultBoxDecorationWithShadow.copyWith(
                         color: PageViewList.PLANNER.color,
                       ),
-                      child: Text(
-                        'Create Task',
-                        style: TextStyles.label1.copyWith(
-                          color: Colors.white,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          'Create Task',
+                          style: TextStyles.label1.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
