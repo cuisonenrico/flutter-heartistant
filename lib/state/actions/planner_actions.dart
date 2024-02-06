@@ -5,6 +5,7 @@ import 'package:flutter_heartistant/features/planner/services/planner_service.da
 import 'package:flutter_heartistant/state/actions/actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
+import 'package:flutter_heartistant/utilities/app_starter.dart';
 import 'package:flutter_heartistant/utilities/extensions/time_format_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 
@@ -80,12 +81,14 @@ class GetTasksAction extends LoadingAction {
 
     if (uid == null) return state;
 
-    final tasks = await PlannerService().getTasks(
+    final plannerPageState = state.plannerPageState;
+
+    final tasks = await getIt<PlannerService>().getTasks(
       uid,
       DateTime(
-        state.plannerPageState.selectedYear,
-        state.plannerPageState.selectedMonth,
-        state.plannerPageState.selectedDay,
+        plannerPageState.selectedYear,
+        plannerPageState.selectedMonth,
+        plannerPageState.selectedDay,
       ),
     );
 
@@ -108,7 +111,7 @@ class CreateTasksAction extends LoadingAction {
     );
     final date = state.createTaskState.date == null ? DateTime.now() : DateTime.parse(state.createTaskState.date!);
 
-    await PlannerService().createTask(uid, date, task);
+    await getIt<PlannerService>().createTask(uid, date, task);
 
     return state;
   }

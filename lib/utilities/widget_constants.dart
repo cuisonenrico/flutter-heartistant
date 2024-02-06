@@ -36,6 +36,12 @@ final defaultBoxDecorationWithShadow = BoxDecoration(
   boxShadow: [defaultShadow],
 );
 
+final defaultFieldDecoration = BoxDecoration(
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(defaultQuarterRadius),
+  boxShadow: [defaultShadow],
+);
+
 // Icon Size
 const defaultIconSize = 30.0;
 

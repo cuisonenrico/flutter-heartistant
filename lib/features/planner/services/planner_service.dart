@@ -6,6 +6,8 @@ import 'package:flutter_heartistant/utilities/extensions/time_format_ext.dart';
 import 'package:flutter_heartistant/utilities/handlers/db_constants.dart';
 
 class PlannerService extends ChangeNotifier {
+  PlannerService();
+
   CollectionReference<Map<String, dynamic>> dayPlanDb = FirebaseFirestore.instance.collection(DAY_PLAN_COLLECTION);
 
   Future<List<TaskDto>?> getTasks(String uid, DateTime selectedDate) async {

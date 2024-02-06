@@ -20,7 +20,10 @@ class MonthPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: defaultQuarterPadding, vertical: defaultHalfPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: defaultQuarterPadding,
+        vertical: defaultHalfPadding,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

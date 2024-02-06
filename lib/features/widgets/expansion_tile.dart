@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/styles/spacers.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/utilities/colors.dart';
-import 'package:flutter_heartistant/utilities/decorations.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
@@ -210,9 +209,3 @@ class AppExpansionTileState extends State<AppExpansionTile> with SingleTickerPro
     );
   }
 }
-
-final defaultFieldDecoration = BoxDecoration(
-  color: Colors.white,
-  borderRadius: BorderRadius.circular(defaultQuarterRadius),
-  boxShadow: [defaultShadow],
-);
