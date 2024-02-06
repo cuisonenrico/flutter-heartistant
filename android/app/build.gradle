@@ -58,17 +58,17 @@ android {
             dimension "flavor-type"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            resValue "string", "app_name", "[DEV] Flutter Auth"
+            resValue "string", "app_name", "[DEV] Flutter Heartistant"
         }
         stage {
             dimension "flavor-type"
             applicationIdSuffix ".test"
             versionNameSuffix "-test"
-            resValue "string", "app_name", "[TEST] Flutter Auth"
+            resValue "string", "app_name", "[TEST] Flutter Heartistant"
         }
         live {
             dimension "flavor-type"
-            resValue "string", "app_name", "Flutter Auth"
+            resValue "string", "app_name", "Flutter Heartistant"
         }
     }
 
