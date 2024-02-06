@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
 import 'package:flutter_heartistant/features/widgets/app_bar_label.dart';
 import 'package:flutter_heartistant/features/widgets/app_icon_button.dart';
+import 'package:flutter_heartistant/utilities/extensions/theme_extensions.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +22,8 @@ class MyAppBar extends StatelessWidget {
     this.isCornersRounded = true,
     this.isShadowVisible = true,
     this.backIconSubstitute,
+    this.color,
+    this.child,
     super.key,
   });
 
@@ -37,6 +40,8 @@ class MyAppBar extends StatelessWidget {
   final TextStyle? labelTextStyle;
   final String? subLabel;
   final IconData? backIconSubstitute;
+  final Color? color;
+  final Widget? child;
 
   double get _verticalPadding => subLabel != null ? defaultHalfPadding : defaultQuarterPadding;
 
@@ -46,9 +51,12 @@ class MyAppBar extends StatelessWidget {
 
     return Container(
       // Padding for the device's status bar
-      padding: EdgeInsets.only(top: viewPadding.top),
+      padding: EdgeInsets.only(
+        top: viewPadding.top,
+        bottom: viewPadding.bottom,
+      ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color ?? Colors.white,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(isCornersRounded ? defaultHalfRadius : 0.0)),
         boxShadow: null,
       ),
@@ -58,36 +66,47 @@ class MyAppBar extends StatelessWidget {
           bottom: _verticalPadding,
           left: defaultHalfPadding,
         ),
-        child: Row(
+        child: Column(
           children: [
-            if (isBackButtonVisible)
-              AppIconButton(
-                icon: Icon(
-                  backIconSubstitute ?? Icons.chevron_left_rounded,
-                  size: _backButtonSize,
-                  color: Colors.black,
+            Row(
+              children: [
+                if (isBackButtonVisible)
+                  AppIconButton(
+                    icon: Icon(
+                      backIconSubstitute ?? Icons.chevron_left_rounded,
+                      size: _backButtonSize,
+                      color: color.getElementColor,
+                    ),
+                    onPressed: onPressBack ?? context.pop,
+                  ),
+                Expanded(
+                  child: AppBarLabel(
+                    label: label,
+                    subLabel: subLabel,
+                    labelTextStyle: labelTextStyle?.copyWith(color: color.getElementColor),
+                  ),
                 ),
-                onPressed: onPressBack ?? context.pop,
-              ),
-            Expanded(
-              child: AppBarLabel(
-                label: label,
-                subLabel: subLabel,
-                labelTextStyle: labelTextStyle,
-              ),
+                if (isMessagingIconVisible)
+                  AppIconButton(
+                    onPressed: () {
+                      context.pushNamed(ChatPageConnector.routeName);
+                    },
+                    icon: Icon(
+                      Icons.message,
+                      color: color.getElementColor,
+                    ),
+                  ),
+                if (isSecondaryIconVisible)
+                  AppIconButton(
+                    onPressed: onSecondaryActionPressed,
+                    icon: Icon(
+                      secondaryActionIcon,
+                      color: color.getElementColor,
+                    ),
+                  ),
+              ],
             ),
-            if (isMessagingIconVisible)
-              AppIconButton(
-                onPressed: () {
-                  context.pushNamed(ChatPageConnector.routeName);
-                },
-                icon: const Icon(Icons.message),
-              ),
-            if (isSecondaryIconVisible)
-              AppIconButton(
-                onPressed: onSecondaryActionPressed,
-                icon: Icon(secondaryActionIcon),
-              ),
+            if (child != null) child!,
           ],
         ),
       ),

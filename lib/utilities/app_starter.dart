@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_heartistant/authentication_app.dart';
+import 'package:flutter_heartistant/features/messaging/services/chat_service.dart';
+import 'package:flutter_heartistant/features/planner/services/planner_service.dart';
 import 'package:flutter_heartistant/firebase_options.dart';
+import 'package:flutter_heartistant/heartistant_app.dart';
 import 'package:flutter_heartistant/state/actions/user_actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:get_it/get_it.dart';
@@ -27,6 +29,9 @@ Future<void> startApp() async {
 
       final currUser = FirebaseAuth.instance.currentUser;
 
+      getIt.registerLazySingleton<ChatService>(() => ChatService());
+      getIt.registerLazySingleton<PlannerService>(() => PlannerService());
+
       if (currUser != null) await store.dispatch(UserLoginAction(currUser));
 
       FirebaseAuth.instance.authStateChanges().listen((User? user) async {
@@ -38,7 +43,7 @@ Future<void> startApp() async {
       runApp(
         StoreProvider<AppState>(
           store: store,
-          child: const AuthenticationApp(),
+          child: const HeartistantApp(),
         ),
       );
     },

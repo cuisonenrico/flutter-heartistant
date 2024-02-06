@@ -5,6 +5,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter_heartistant/features/messaging/services/chat_service.dart';
 import 'package:flutter_heartistant/state/actions/actions.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
+import 'package:flutter_heartistant/utilities/app_starter.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 
 /// Gets the users in firestore and store in state
@@ -15,7 +16,7 @@ class GetUserListAction extends LoadingAction {
 
   @override
   Future<AppState> reduce() async {
-    final userListAll = await ChatService().getUserList();
+    final userListAll = await getIt<ChatService>().getUserList();
 
     final userList = userListAll.where((element) => element.uid != state.userState.user.uid).toList();
 
@@ -31,7 +32,7 @@ class GetChatRoomsAction extends LoadingAction {
 
   @override
   Future<AppState> reduce() async {
-    final chatRooms = await ChatService().getChatRooms(uid: state.userState.user.uid ?? '0');
+    final chatRooms = await getIt<ChatService>().getChatRooms(uid: state.userState.user.uid ?? '0');
     return state.copyWith(chatPageState: state.chatPageState.copyWith(chatRooms: chatRooms));
   }
 }
@@ -60,7 +61,7 @@ class CreateChatRoomAction extends LoadingAction {
       return state;
     }
 
-    final newChatRoom = await ChatService().createChatRoom(
+    final newChatRoom = await getIt<ChatService>().createChatRoom(
       uid: uid,
       recipientId: recipientId,
     );
@@ -89,7 +90,7 @@ class ChatMessageAction extends LoadingAction {
 
     if (chatDraft == null) return state;
 
-    final chatMessage = await ChatService().createChatMessage(
+    final chatMessage = await getIt<ChatService>().createChatMessage(
       roomId: selectedChatRoom.roomId ?? emptyString,
       senderId: state.userState.user.uid,
       message: chatDraft,
@@ -119,7 +120,7 @@ class SelectChatRoomAction extends ReduxAction<AppState> {
     if (chatRoomId == null) return state;
     final chatRoom = state.chatPageState.chatRooms.firstOrNullWhere((element) => element.roomId == chatRoomId);
 
-    final chatMessages = await ChatService().getChatMessages(chatRoomId!);
+    final chatMessages = await getIt<ChatService>().getChatMessages(chatRoomId!);
 
     // Non existing chat rooms will not have any messages, return without messages.
     if (chatRoom == null || chatMessages == null) return state.copyWith.chatPageState(selectedChatRoom: chatRoom);

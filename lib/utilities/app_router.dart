@@ -73,7 +73,7 @@ final router = GoRouter(
                 child: const CreateChatRoomConnector(),
               ),
               routes: const [],
-            )
+            ),
           ],
         )
       ],
@@ -114,6 +114,7 @@ CustomTransitionPage buildPageWithDefaultTransition<T>({
   required Widget child,
 }) =>
     CustomTransitionPage<T>(
+      transitionDuration: const Duration(milliseconds: 500),
       key: state.pageKey,
       child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
