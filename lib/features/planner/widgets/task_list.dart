@@ -8,6 +8,7 @@ import 'package:flutter_heartistant/features/widgets/floating_container.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
 import 'package:flutter_heartistant/utilities/decorations.dart';
 import 'package:flutter_heartistant/utilities/enums/planner_page_enums.dart';
+import 'package:flutter_heartistant/utilities/extensions/string_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:go_router/go_router.dart';
@@ -87,7 +88,7 @@ class TaskList extends StatelessWidget {
                                 style: TextStyles.label1,
                               ),
                               Text(
-                                task.time ?? emptyString,
+                                task.time?.timeFormatted ?? emptyString,
                                 style: TextStyles.label1,
                               ),
                             ],
