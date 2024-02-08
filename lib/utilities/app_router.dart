@@ -7,7 +7,7 @@ import 'package:flutter_heartistant/features/login/login_screen_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_page_connector.dart';
 import 'package:flutter_heartistant/features/messaging/chat_room/chat_room_connector.dart';
 import 'package:flutter_heartistant/features/messaging/create_chat_room_page/create_chat_room_page_connector.dart';
-import 'package:flutter_heartistant/features/planner/task_view/task_view.dart';
+import 'package:flutter_heartistant/features/planner/task_view/task_view_connector.dart';
 import 'package:flutter_heartistant/features/sign_up/sign_up_connector.dart';
 import 'package:flutter_heartistant/state/app_state.dart';
 import 'package:go_router/go_router.dart';
@@ -76,13 +76,13 @@ final router = GoRouter(
               routes: const [],
             ),
             GoRoute(
-              path: TaskView.route,
-              name: TaskView.routeName,
-              builder: (_, __) => const TaskView(),
+              path: TaskViewConnector.route,
+              name: TaskViewConnector.routeName,
+              builder: (_, __) => const TaskViewConnector(),
               pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
                 context: context,
                 state: state,
-                child: const TaskView(),
+                child: const TaskViewConnector(),
               ),
               routes: const [],
             ),

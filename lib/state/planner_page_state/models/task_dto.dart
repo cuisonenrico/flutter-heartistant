@@ -6,6 +6,7 @@ part 'task_dto.g.dart';
 @freezed
 class TaskDto with _$TaskDto {
   const factory TaskDto({
+    int? id,
     String? note,
     String? title,
     String? time,
@@ -15,4 +16,13 @@ class TaskDto with _$TaskDto {
   factory TaskDto.fromJson(Map<String, dynamic> json) => _$TaskDtoFromJson(json);
 
   factory TaskDto.init() => const TaskDto();
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "note": note,
+        "title": title,
+        "time": time,
+        "progress": progress,
+      };
 }

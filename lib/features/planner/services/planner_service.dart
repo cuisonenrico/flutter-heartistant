@@ -38,6 +38,7 @@ class PlannerService extends ChangeNotifier {
         'creationDate': dateCreatedFormatted,
         'tasks': [
           {
+            'id': 0,
             'title': task.title,
             'note': task.note,
             'time': task.time,
@@ -53,6 +54,7 @@ class PlannerService extends ChangeNotifier {
       await dayPlanDb.doc(primaryKey).update({
         "tasks": FieldValue.arrayUnion([
           {
+            'id': task.id,
             'title': task.title,
             'note': task.note,
             'time': task.time,
@@ -64,6 +66,12 @@ class PlannerService extends ChangeNotifier {
       return;
     }
 
+    return;
+  }
+
+  Future<void> updateProgress(String id, List<TaskDto> tasks) async {
+    final tasksMapped = tasks.map((task) => task.toJson());
+    await dayPlanDb.doc(id).update({"tasks": tasksMapped});
     return;
   }
 }
