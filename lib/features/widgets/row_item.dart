@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heartistant/features/styles/spacers.dart';
+import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
 class RowItem extends StatelessWidget {
@@ -21,22 +22,30 @@ class RowItem extends StatelessWidget {
         vertical: defaultQuarterPadding,
         horizontal: defaultHalfPadding,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Expanded(
-            child: Row(
-              children: [
-                icon ?? const Icon(Icons.show_chart),
-                const HorizontalSpace(4.0),
-                Text(label),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    icon ?? const Icon(Icons.show_chart),
+                    const HorizontalSpace(4.0),
+                    Text(
+                      label,
+                      style: TextStyles.label1,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: value ?? const SizedBox(),
+              ),
+            ],
           ),
-          Expanded(
-            child: value ?? const SizedBox(),
-          ),
+          const Divider(thickness: 1),
         ],
       ),
     );

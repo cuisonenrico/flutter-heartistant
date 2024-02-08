@@ -41,7 +41,7 @@ class RadioItem<T> extends StatelessWidget {
           const HorizontalSpace(defaultQuarterSpacing),
           Text(
             label ?? emptyString,
-            style: TextStyles.label2,
+            style: TextStyles.label2.copyWith(color: Colors.black),
           ),
         ],
       ),

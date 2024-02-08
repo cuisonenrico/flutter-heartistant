@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum TaskProgress {
-  TODO(Colors.blueAccent, 'Todo'),
+  TODO(Colors.blue, 'Todo'),
   IN_PROGRESS(Colors.orangeAccent, 'In Progress'),
   COMPLETED(Colors.greenAccent, 'Completed');
 

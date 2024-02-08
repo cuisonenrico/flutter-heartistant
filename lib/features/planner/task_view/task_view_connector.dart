@@ -15,8 +15,9 @@ class TaskViewConnector extends StatelessWidget {
     return StoreConnector<AppState, TaskViewVm>(
       vm: () => TaskViewVmFactory(),
       builder: (_, vm) => TaskView(
-        task: vm.task,
         onChangeProgress: vm.onChangeProgress,
+        task: vm.task,
+        date: vm.date,
       ),
     );
   }

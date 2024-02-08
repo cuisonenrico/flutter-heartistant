@@ -7,6 +7,6 @@ extension ThemeExt on Color? {
     double luminance = this!.computeLuminance();
 
     // Choose text color based on luminance
-    return luminance > 0.5 ? Colors.black : Colors.white;
+    return luminance > 0.25 ? Colors.black : Colors.white;
   }
 }
