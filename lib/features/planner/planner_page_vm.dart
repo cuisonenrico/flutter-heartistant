@@ -11,6 +11,7 @@ class PlannerPageVmFactory extends VmFactory<AppState, PlannerPageConnector, Pla
         onSelectDay: _onSelectDay,
         onSelectMonth: _onSelectMonth,
         onSelectYear: _onSelectYear,
+        onSelectTask: _onSelectTask,
         selectedDay: state.plannerPageState.selectedDay,
         selectedMonth: state.plannerPageState.selectedMonth,
         selectedYear: state.plannerPageState.selectedYear,
@@ -24,6 +25,8 @@ class PlannerPageVmFactory extends VmFactory<AppState, PlannerPageConnector, Pla
 
   void _onSelectYear(int selectedYear) => dispatch(SelectYearAction(selectedYear));
 
+  void _onSelectTask(int index) => dispatch(SelectTaskAction(index));
+
   // void _onResetDate() => dispatch(ResetSelectedDatesAction());
 }
 
@@ -32,6 +35,7 @@ class PlannerPageVm extends Vm {
     required this.onSelectDay,
     required this.onSelectMonth,
     required this.onSelectYear,
+    required this.onSelectTask,
     required this.selectedDay,
     required this.selectedMonth,
     required this.selectedYear,
@@ -48,6 +52,7 @@ class PlannerPageVm extends Vm {
   final ValueChanged<int> onSelectDay;
   final ValueChanged<int> onSelectMonth;
   final ValueChanged<int> onSelectYear;
+  final ValueChanged<int> onSelectTask;
 
   final int selectedDay;
   final int selectedMonth;

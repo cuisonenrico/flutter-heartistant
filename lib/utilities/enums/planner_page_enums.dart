@@ -9,3 +9,5 @@ enum TaskProgress {
 
   const TaskProgress(this.color);
 }
+
+enum TimeRange { START_TIME, END_TIME }

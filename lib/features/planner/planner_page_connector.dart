@@ -17,6 +17,7 @@ class PlannerPageConnector extends StatelessWidget {
         onSelectDay: vm.onSelectDay,
         onSelectMonth: vm.onSelectMonth,
         onSelectYear: vm.onSelectYear,
+        onSelectTask: vm.onSelectTask,
         selectedDay: vm.selectedDay,
         selectedMonth: vm.selectedMonth,
         selectedYear: vm.selectedYear,
