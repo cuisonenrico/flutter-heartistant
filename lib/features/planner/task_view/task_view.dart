@@ -7,6 +7,7 @@ import 'package:flutter_heartistant/features/widgets/row_item.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
 import 'package:flutter_heartistant/utilities/enums/page_view_enum.dart';
 import 'package:flutter_heartistant/utilities/enums/planner_page_enums.dart';
+import 'package:flutter_heartistant/utilities/extensions/string_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 
@@ -40,16 +41,12 @@ class TaskView extends StatelessWidget {
             ),
             const Divider(),
             // Due
-            RowItem(
-              label: 'Due',
-              value: Text(task?.time ?? emptyString),
-              icon: const Icon(Icons.alarm),
-            ),
-            RowItem(
-              label: 'Progress',
-              value: Text('${task?.progress ?? emptyString}'),
-              icon: const Icon(Icons.show_chart),
-            ),
+            if (task?.time != emptyString)
+              RowItem(
+                label: 'Due',
+                value: Text(task?.time?.timeFormatted ?? emptyString),
+                icon: const Icon(Icons.alarm),
+              ),
             RowItem(
               label: 'Notes',
               value: Text(task?.note ?? emptyString),
