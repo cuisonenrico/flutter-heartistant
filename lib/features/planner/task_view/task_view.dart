@@ -37,87 +37,103 @@ class TaskView extends StatelessWidget {
           isMessagingIconVisible: false,
           isSecondaryIconVisible: false,
         ),
-        body: CustomPaint(
-          painter: CurvedPainter(TaskProgress.values[task?.progress ?? 0].color),
-          child: Container(
-            padding: const EdgeInsets.all(defaultHalfPadding),
-            child: Column(
-              children: [
-                Text(
-                  task?.title ?? emptyString,
-                  style: TextStyles.label1.copyWith(fontSize: 26.0),
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ClipPath(
+                clipper: CustomPath(),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  color: TaskProgress.values[task?.progress ?? 0].color.withOpacity(0.2),
                 ),
-                Text(
-                  date,
-                  style: TextStyles.label1.copyWith(fontSize: 26.0),
-                ),
-                const Divider(),
-                // Due
-                if (task?.time != null)
-                  RowItem(
-                    label: 'Due',
-                    value: Text(
-                      task?.time?.timeFormatted ?? emptyString,
-                      style: TextStyles.body1.copyWith(color: Colors.black),
-                    ),
-                    icon: const Icon(Icons.alarm),
-                  ),
-                RowItem(
-                  label: 'Notes',
-                  value: Text(
-                    task?.note ?? emptyString,
-                    style: TextStyles.body1.copyWith(color: Colors.black),
-                  ),
-                  icon: const Icon(Icons.note_sharp),
-                ),
-                RowItem(
-                  label: 'Progress',
-                  icon: const Icon(Icons.show_chart),
-                  value: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RadioItem<TaskProgress>(
-                        value: TaskProgress.values[task?.progress ?? 0],
-                        groupValue: TaskProgress.TODO,
-                        label: TaskProgress.TODO.value,
-                        color: TaskProgress.TODO.color,
-                        onChanged: onChangeProgress,
-                      ),
-                      RadioItem<TaskProgress>(
-                        value: TaskProgress.values[task?.progress ?? 0],
-                        groupValue: TaskProgress.IN_PROGRESS,
-                        label: TaskProgress.IN_PROGRESS.value,
-                        color: TaskProgress.IN_PROGRESS.color,
-                        onChanged: onChangeProgress,
-                      ),
-                      RadioItem<TaskProgress>(
-                        value: TaskProgress.values[task?.progress ?? 0],
-                        groupValue: TaskProgress.COMPLETED,
-                        label: TaskProgress.COMPLETED.value,
-                        color: TaskProgress.COMPLETED.color,
-                        onChanged: onChangeProgress,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(defaultHalfPadding),
+                child: Column(
+                  children: [
+                    Text(
+                      task?.title ?? emptyString,
+                      style: TextStyles.label1.copyWith(fontSize: 26.0),
+                    ),
+                    Text(
+                      date,
+                      style: TextStyles.label1.copyWith(fontSize: 26.0),
+                    ),
+                    const Divider(),
+                    // Due
+                    if (task?.time != null)
+                      RowItem(
+                        label: 'Due',
+                        value: Text(
+                          task?.time?.timeFormatted ?? emptyString,
+                          style: TextStyles.body1.copyWith(color: Colors.black),
+                        ),
+                        icon: const Icon(Icons.alarm),
+                      ),
+                    RowItem(
+                      label: 'Notes',
+                      value: Text(
+                        task?.note ?? emptyString,
+                        style: TextStyles.body1.copyWith(color: Colors.black),
+                      ),
+                      icon: const Icon(Icons.note_sharp),
+                    ),
+                    RowItem(
+                      label: 'Progress',
+                      icon: const Icon(Icons.show_chart),
+                      value: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          RadioItem<TaskProgress>(
+                            value: TaskProgress.values[task?.progress ?? 0],
+                            groupValue: TaskProgress.TODO,
+                            label: TaskProgress.TODO.value,
+                            color: TaskProgress.TODO.color,
+                            onChanged: onChangeProgress,
+                          ),
+                          RadioItem<TaskProgress>(
+                            value: TaskProgress.values[task?.progress ?? 0],
+                            groupValue: TaskProgress.IN_PROGRESS,
+                            label: TaskProgress.IN_PROGRESS.value,
+                            color: TaskProgress.IN_PROGRESS.color,
+                            onChanged: onChangeProgress,
+                          ),
+                          RadioItem<TaskProgress>(
+                            value: TaskProgress.values[task?.progress ?? 0],
+                            groupValue: TaskProgress.COMPLETED,
+                            label: TaskProgress.COMPLETED.value,
+                            color: TaskProgress.COMPLETED.color,
+                            onChanged: onChangeProgress,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class CurvedPainter extends CustomPainter {
-  CurvedPainter(this.color);
-
-  final Color color;
+class CustomPath extends CustomClipper<Path> {
   @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = color.withOpacity(0.2);
-    Path path = Path();
+  Path getClip(Size size) {
+    final path = Path();
     // Adjust these values to change the curvature and position of the curves
     double curveHeight1 = 200.0;
     double curveHeight2 = 380.0;
@@ -131,11 +147,11 @@ class CurvedPainter extends CustomPainter {
 
     path.close();
 
-    canvas.drawPath(path, paint);
+    return path;
   }
 
   @override
-  bool shouldRepaint(oldDelegate) {
-    return false;
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

@@ -110,7 +110,7 @@ class CreateTasksAction extends LoadingAction {
         ? createTaskState.startTime
         : '${createTaskState.startTime} - ${createTaskState.endTime}';
 
-    final id = state.plannerPageState.tasks?.length;
+    final id = state.plannerPageState.tasks?.length ?? 0;
 
     final task = TaskDto(
       id: id,
