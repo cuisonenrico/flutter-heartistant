@@ -36,14 +36,7 @@ class PlannerService extends ChangeNotifier {
     if (!exists) {
       final data = <String, dynamic>{
         'creationDate': dateCreatedFormatted,
-        'tasks': [
-          {
-            'title': task.title,
-            'note': task.note,
-            'time': task.time,
-            'progress': 0,
-          },
-        ]
+        'tasks': [task.toJson()]
       };
       await dayPlanDb.doc(primaryKey).set(data);
       return;
@@ -51,19 +44,18 @@ class PlannerService extends ChangeNotifier {
 
     try {
       await dayPlanDb.doc(primaryKey).update({
-        "tasks": FieldValue.arrayUnion([
-          {
-            'title': task.title,
-            'note': task.note,
-            'time': task.time,
-            'progress': 0,
-          },
-        ])
+        "tasks": FieldValue.arrayUnion([task.toJson()])
       });
     } catch (e) {
       return;
     }
 
+    return;
+  }
+
+  Future<void> updateProgress(String id, List<TaskDto> tasks) async {
+    final tasksMapped = tasks.map((task) => task.toJson());
+    await dayPlanDb.doc(id).update({"tasks": tasksMapped});
     return;
   }
 }

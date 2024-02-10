@@ -101,6 +101,7 @@ class CreateTasksAction extends LoadingAction {
   @override
   Future<AppState> reduce() async {
     final uid = state.userState.user.uid;
+
     if (uid == null) return state;
 
     final createTaskState = state.createTaskState;
@@ -109,7 +110,10 @@ class CreateTasksAction extends LoadingAction {
         ? createTaskState.startTime
         : '${createTaskState.startTime} - ${createTaskState.endTime}';
 
+    final id = state.plannerPageState.tasks?.length ?? 0;
+
     final task = TaskDto(
+      id: id,
       title: createTaskState.title,
       note: createTaskState.notes,
       time: time,
@@ -258,5 +262,66 @@ class SelectTaskAction extends ReduxAction<AppState> {
     if (tasks == null) return state;
 
     return state.copyWith.plannerPageState(selectedTask: tasks[index]);
+  }
+}
+
+///
+class ProgressChangeAction extends LoadingAction {
+  ProgressChangeAction(this.progress) : super(actionKey: key);
+
+  static const key = 'progress-change-action';
+
+  final TaskProgress progress;
+
+  @override
+  void before() {
+    // Update list locally in state first
+    dispatch(OnProgressChangeAction(progress));
+    super.before();
+  }
+
+  @override
+  Future<AppState> reduce() async {
+    final uid = state.userState.user.uid;
+    if (uid == null) return state;
+
+    final tasks = state.plannerPageState.tasks;
+
+    if (tasks == null) return state;
+
+    final dayPlanId =
+        '${uid}_${state.plannerPageState.selectedYear}-${state.plannerPageState.selectedMonth.toString().padLeft(2, '0')}-${state.plannerPageState.selectedDay.toString().padLeft(2, '0')}';
+
+    // write in [Firestore]
+    await getIt<PlannerService>().updateProgress(
+      dayPlanId,
+      tasks,
+    );
+    return state;
+  }
+}
+
+class OnProgressChangeAction extends ReduxAction<AppState> {
+  OnProgressChangeAction(this.progress);
+
+  final TaskProgress progress;
+
+  @override
+  AppState reduce() {
+    final selectedTaskIndex = state.plannerPageState.selectedTask?.id;
+
+    if (selectedTaskIndex == null) return state;
+
+    final updatedTask = state.plannerPageState.selectedTask?.copyWith(progress: progress.index);
+
+    if (updatedTask == null) return state;
+
+    final tasks = state.plannerPageState.tasks;
+
+    if (tasks == null) return state;
+
+    final updatedTasks = tasks.map((task) => task.id == selectedTaskIndex ? updatedTask : task).toList();
+
+    return state.copyWith.plannerPageState(tasks: updatedTasks, selectedTask: updatedTask);
   }
 }

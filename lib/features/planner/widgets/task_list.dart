@@ -1,13 +1,14 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_heartistant/features/planner/task_view/task_view.dart';
+import 'package:flutter_heartistant/features/planner/task_view/task_view_connector.dart';
 import 'package:flutter_heartistant/features/styles/spacers.dart';
 import 'package:flutter_heartistant/features/styles/styles.dart';
 import 'package:flutter_heartistant/features/widgets/floating_container.dart';
 import 'package:flutter_heartistant/state/planner_page_state/models/task_dto.dart';
 import 'package:flutter_heartistant/utilities/decorations.dart';
 import 'package:flutter_heartistant/utilities/enums/planner_page_enums.dart';
+import 'package:flutter_heartistant/utilities/extensions/string_ext.dart';
 import 'package:flutter_heartistant/utilities/string_constants.dart';
 import 'package:flutter_heartistant/utilities/widget_constants.dart';
 import 'package:go_router/go_router.dart';
@@ -55,7 +56,7 @@ class TaskList extends StatelessWidget {
                   (index, task) => InkWell(
                     onTap: () {
                       onSelectTask(index);
-                      context.pushNamed(TaskView.routeName);
+                      context.pushNamed(TaskViewConnector.routeName);
                     },
                     child: FloatingContainer(
                       decoration: BoxDecoration(
@@ -87,7 +88,7 @@ class TaskList extends StatelessWidget {
                                 style: TextStyles.label1,
                               ),
                               Text(
-                                task.time ?? emptyString,
+                                task.time?.timeFormatted ?? emptyString,
                                 style: TextStyles.label1,
                               ),
                             ],

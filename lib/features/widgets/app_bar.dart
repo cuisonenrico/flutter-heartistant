@@ -49,7 +49,8 @@ class MyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.of(context).viewPadding;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 400),
       // Padding for the device's status bar
       padding: EdgeInsets.only(
         top: viewPadding.top,
